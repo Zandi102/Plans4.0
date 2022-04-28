@@ -30,7 +30,7 @@ class CreatePlanViewController: UIViewController {
     private var isAddressInvalid = false
     private var isTimeInvalid = false
     private var isDateInvalid = false
-    private var isInvalid = false
+    private static var isInvalid = false
     private var planCreated = false
     // RESPONSE TO USER INPUTS LABEL
     private let successPlan: UILabel = {
@@ -93,12 +93,16 @@ class CreatePlanViewController: UIViewController {
     private func validate(planToValidate : Plan) {
         // the return value could either be a plan or nil value
         // validate the start time and end time of the plan, to make sure that start time is > current date, and end time is > starttime
-        if planToValidate.day.compare(Date()).rawValue > 0 && planToValidate.endTime.compare(planToValidate.startTime).rawValue > 0 {
+        if planToValidate.day.compare(Date()).rawValue >= 0 && planToValidate.endTime.compare(planToValidate.startTime).rawValue > 0 {
             // validate the address string input of the plan
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
             valid_coord(plan: planToValidate) { (complete, error) in
                 if error == nil {
-                    // set up the plan to be a valid plan
+                    if(CreatePlanViewController.isInvalid == true) {
+                        self.failPlan.removeFromSuperview()
+                        CreatePlanViewController.isInvalid = false;
+                        //self.isTimeInvalid = false
+                    }
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true;
                     //planToValidate.owner = self.activeUser
@@ -109,11 +113,7 @@ class CreatePlanViewController: UIViewController {
                     self.view.addSubview(self.successPlan)
                     self.view.addSubview(self.backToMap)
                     self.planCreated = true;
-                    if(self.isInvalid == true) {
-                        self.failPlan.removeFromSuperview()
-                        self.isInvalid = false;
-                        //self.isTimeInvalid = false
-                    }
+
                     if(self.isTimeInvalid == true) {
                         self.checkTimeInput.removeFromSuperview()
                     }
@@ -136,7 +136,7 @@ class CreatePlanViewController: UIViewController {
                 }
                 else {
                     self.isAddressInvalid = true
-                    self.isInvalid = true
+                    CreatePlanViewController.isInvalid = true
                     self.view.addSubview(self.failPlan)
                     self.view.addSubview(self.checkAddressInput)
                     if(self.isTimeInvalid == true) {
@@ -156,7 +156,7 @@ class CreatePlanViewController: UIViewController {
         }
         else {
             self.isTimeInvalid = true
-            self.isInvalid = true
+            CreatePlanViewController.isInvalid = true
             self.view.addSubview(self.failPlan)
             self.view.addSubview(self.checkTimeInput)
             if(self.isAddressInvalid == true) {
@@ -203,29 +203,29 @@ class CreatePlanViewController: UIViewController {
             let endTime   : Date = self.endTimePicker.date.addingTimeInterval(dayDifference)
             let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.sampleUser.userName)
             validate(planToValidate: planToAdd)
-            
-            let planName1 = self.planName.text!
-            let datePicker1 = self.datePicker.date.description;
-            let startPicker1 = self.startTimePicker.date.description;
-            let endPicker1 = self.endTimePicker.date.description;
-            let addressName = self.planAddress.text!
-            let planNotes1 = self.planNotes.text!
-            
-           
-            let db = DBManager();
-            let url = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
-            let parameters: [String: Any] = [
-                "plan_name":planName1,
-                    // "username":passwordField.text!, This must take the username from the global User class
-                "startTime":startPicker1,
-                "endTime":endPicker1,
-                "date":datePicker1,
-                "address":addressName,
-                "description":planNotes1,
-                "username": User.sampleUser.userName
-            ]
-            let message = db.postRequest(url, parameters)
-            print(message);
+            print(CreatePlanViewController.isInvalid)
+            if(CreatePlanViewController.isInvalid == false) {
+                let planName1 = self.planName.text!
+                let datePicker1 = self.datePicker.date.description;
+                let startPicker1 = self.startTimePicker.date.description;
+                let endPicker1 = self.endTimePicker.date.description;
+                let addressName = self.planAddress.text!
+                let planNotes1 = self.planNotes.text!
+                let db = DBManager();
+                let url = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
+                let parameters: [String: Any] = [
+                    "plan_name":planName1,
+                        // "username":passwordField.text!, This must take the username from the global User class
+                    "startTime":startPicker1,
+                    "endTime":endPicker1,
+                    "date":datePicker1,
+                    "address":addressName,
+                    "description":planNotes1,
+                    "username": User.sampleUser.userName
+                ]
+                let message = db.postRequest(url, parameters)
+                print(message);
+            }
             
       
         }
