@@ -57,8 +57,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     
-
+    // location manager extension that gets the user's current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // gets the location of the current user
         guard let locationValue : CLLocationCoordinate2D = manager.location?.coordinate else { return }
         let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
         let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
@@ -77,7 +78,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     }
 
-    
+    // adds all the annotations to the map
     func addMapOverlay(planList : [Plan]) {
         for plan in planList {
             let planAnnotation : MKPointAnnotation = MKPointAnnotation()
@@ -95,11 +96,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
            }
     }
 
-    
-
+    // modifies the map annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MyMarker")
-        if annotation.title == "YOU" {
+        if annotation.title == "YOU" && annotation.subtitle == "this is you!" {
             annotationView.markerTintColor = .systemIndigo
             annotationView.glyphImage = UIImage(named: "bmoicon")
         }
@@ -113,7 +113,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
 
     // gets the coordinates of the address
-
     private func loc_coord(plan: Plan, completionHandler: @escaping (CLLocationCoordinate2D, NSError?) -> Void) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(plan.address) { (placemarks, error) in
@@ -128,8 +127,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
            }
        }
 
-    
-
+    // helps the location manager access the user location services
     func determineCurrentLocation() {
         if(locationAccess == false) {
             locationManager.requestWhenInUseAuthorization()
@@ -143,8 +141,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
 
-    
-
+    // back tap action function
     @objc func backTap() {
 
         //set values for signup to null;
