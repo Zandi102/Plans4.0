@@ -28,7 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private var locationAccess = false;
 
     @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {
-        // refresh map annotations
+        User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
         mapView.delegate = self
         for annot in mapView.annotations {
             if annot.title == "YOU" {
@@ -46,6 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     override func viewDidLoad() {
         super.viewDidLoad();
+        User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
         determineCurrentLocation()
         backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
         // refresh annotations if needed

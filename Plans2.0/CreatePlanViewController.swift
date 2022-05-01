@@ -14,8 +14,7 @@ import UIKit
 import Foundation
 import CoreLocation
 
-class CreatePlanViewController: UIViewController {
-    
+class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     private struct PlanStruct: Decodable {
         enum Category: String, Decodable{
             case swift, combine, debugging, xcode
@@ -71,7 +70,7 @@ class CreatePlanViewController: UIViewController {
     private let checkAddressInput: UILabel = {
         let label = UILabel()
         label.textColor = .systemOrange
-        label.adjustsFontSizeToFitWidth = true;
+        label.adjustsFontSizeToFitWidth = true
         label.text = "Check address, use format: Address, City, State, Zip"
         return label
     }();
@@ -91,11 +90,24 @@ class CreatePlanViewController: UIViewController {
         startTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
         endTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
         datePicker.overrideUserInterfaceStyle = .light
-        createPlanButton?.addTarget(self, action: #selector(createPlan), for: .touchUpInside);
-        cancelButton?.addTarget(self, action: #selector(cancel), for: .touchUpInside);
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-
+        createPlanButton?.addTarget(self, action: #selector(createPlan), for: .touchUpInside)
+        cancelButton?.addTarget(self, action: #selector(cancel), for: .touchUpInside)
+        planName.delegate = self
+        planAddress.delegate = self
+        planNotes.delegate = self
+        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        planName.resignFirstResponder()
+        planAddress.resignFirstResponder()
+        planNotes.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     // the plan is valid, return a plan
     // for a plan to be valid, three things must be true:
@@ -116,19 +128,20 @@ class CreatePlanViewController: UIViewController {
                 if error == nil {
                     if(CreatePlanViewController.isInvalid == true) {
                         self.failPlan.removeFromSuperview()
-                        CreatePlanViewController.isInvalid = false;
+                        CreatePlanViewController.isInvalid = false
                         //self.isTimeInvalid = false
                     }
+                    CreatePlanViewController.isInvalid = false
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
-                    planToValidate.validated = true;
+                    planToValidate.validated = true
                     //planToValidate.owner = self.activeUser
-                    self.activeUser.plans.append(planToValidate)
+                    //self.activeUser.plans.append(planToValidate)
                     self.add_success = true
                     
                     // print success response to the user
                     self.view.addSubview(self.successPlan)
                     self.view.addSubview(self.backToMap)
-                    self.planCreated = true;
+                    self.planCreated = true
 
                     if(self.isTimeInvalid == true) {
                         self.checkTimeInput.removeFromSuperview()
@@ -137,8 +150,8 @@ class CreatePlanViewController: UIViewController {
                         self.checkAddressInput.removeFromSuperview()
                         //self.isAddressInvalid = false
                     }
-                    self.successPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50);
-                    self.successPlan.textAlignment = .center;
+                    self.successPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50)
+                    self.successPlan.textAlignment = .center
                     self.backToMap.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 75, width: self.view.bounds.width, height: 50)
                     self.backToMap.textAlignment = .center
 
@@ -176,12 +189,12 @@ class CreatePlanViewController: UIViewController {
             self.view.addSubview(self.failPlan)
             self.view.addSubview(self.checkTimeInput)
             if(self.isAddressInvalid == true) {
-                self.checkAddressInput.removeFromSuperview();
+                self.checkAddressInput.removeFromSuperview()
                 self.isAddressInvalid = false;
             }
             //self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.frame.size.width - 50, height: 50)
-            self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50);
-            self.failPlan.textAlignment = .center;
+            self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50)
+            self.failPlan.textAlignment = .center
             self.checkTimeInput.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 75, width: self.view.bounds.width, height: 50)
             self.checkTimeInput.textAlignment = .center
             // print error details to console
@@ -228,7 +241,11 @@ class CreatePlanViewController: UIViewController {
                 let addressName = self.planAddress.text!
                 let planNotes1 = self.planNotes.text!
                 let db = DBManager();
-                let url = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
+                let url : URL = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
+                //let username = User.sampleUser.userName
+                //let plan_name = planName1
+                //let address = addressName
+                //let url2 : URL? = URL(string: "http://abdasalaam.com/Functions/getPlanID.php?plan_name=\(plan_name)&address=\(address)&username=\(username)")
                 let parameters: [String: Any] = [
                     "plan_name":planName1,
                     "startTime":startPicker1,
@@ -240,23 +257,18 @@ class CreatePlanViewController: UIViewController {
                 ]
                 let message = db.postRequest(url, parameters)
                 print(message);
-                
-               /* let url2 = URL(string: "http://abdasalaam.com/Functions/getPlanID.php?plan_name=\(planName1)&address=\(addressName)&username=\(User.sampleUser.userName)")!
-                let parameters2: [String: Any] = [
-                    "plan_name":planName1,
-                    "address":addressName,
-                    "username": User.sampleUser.userName
-                ]
-                let message2 = db.getRequest(url2)
-                let jsonData = message2.data(using: .utf8)!
+
+                /*let message2 = db.getRequest(url2!)
+                if message2.count > 0 {
+                let jsonData = message2[0].data(using: .utf8)!
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData);
                 print(resp.plan_name)
-                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
-                print(message2);
-                 
- */
+                    User.sampleUser.plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
+                print(message2[0]);
+                
+ 
+                }*/
             }
-            
         }
     }
 }

@@ -99,7 +99,7 @@ class User : Identifiable {
     public static func createCurrentUser(_ username : String) -> User {
         let user : User = User();
         let db = DBManager();
-        let url = URL(string: "http://abdasalaam.com/Functions/loadUser.php?username=\(username)")!
+        let url : URL = URL(string: "http://abdasalaam.com/Functions/loadUser.php?username=\(username)")!
         let messages = db.getRequest(url)
         if messages.count > 0 {
             let userFields = messages[0]

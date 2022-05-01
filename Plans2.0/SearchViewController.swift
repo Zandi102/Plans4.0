@@ -34,13 +34,23 @@ class SearchViewController: UIViewController {
     }();
     //var hasAdded = false;
     override func viewDidLoad() {
+        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
         super.viewDidLoad()
         searchField.delegate = self;
         searchField.dataSource = self;
         searchBar.delegate = self;
-        searchBar.searchTextField.textColor = .orange
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
+        searchBar.searchTextField.textColor = .systemOrange
+        searchBar.delegate = self;
+        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchBar.resignFirstResponder()
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func filterContentForSearchText(searchText: String) {
@@ -61,7 +71,9 @@ class SearchViewController: UIViewController {
     }
     
     func isFiltering() -> Bool {
-        //searchField.reloadData();
+        if(!isSearchBarEmpty()) {
+            label.removeFromSuperview()
+        }
         return !isSearchBarEmpty();
     }
     

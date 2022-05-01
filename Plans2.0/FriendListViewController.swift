@@ -17,8 +17,6 @@ class FriendListViewController: UIViewController {
         super.viewDidLoad()
         friendTable.delegate = self;
         friendTable.dataSource = self;
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
     }
     
 

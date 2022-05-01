@@ -19,21 +19,15 @@ class InviteViewController: UIViewController{
     var doubleClick : String = ""
     var usersInv = User.sampleUser.invites
     override func viewDidLoad() {
+        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
         super.viewDidLoad();
         tableView.delegate = self;
         tableView.dataSource = self;
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-        //tableView.backgroundColor = .systemGray2
-        //title = "Invite List";
-        //view.addSubview(table);
-       // table.dataSource = self;
     }
 }
 extension InviteViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if doubleClick != usersInv[indexPath.row].userName {
-            doubleClick = usersInv[indexPath.row].userName
+        if doubleClick == usersInv[indexPath.row].userName {
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/approveFriend.php")!
             let parameters: [String: Any] = [
@@ -50,6 +44,9 @@ extension InviteViewController : UITableViewDelegate {
                 tableView.reloadData();
             }
         //print(invitations[indexPath.row]);
+        }
+        else {
+            doubleClick = usersInv[indexPath.row].userName
         }
     }
 }

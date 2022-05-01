@@ -6,7 +6,7 @@
 //
 import UIKit
 
-public class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameField: UITextField!;
     
@@ -32,8 +32,19 @@ public class SignUpViewController: UIViewController {
         super.viewDidLoad()
         label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100)
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside);
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
+        usernameField.delegate = self;
+        passwordField.delegate = self
+        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate{
 
   //  private let imageView: UIImageView = {
      //   let imageView = UIImageView()
@@ -42,12 +42,23 @@ class ViewController: UIViewController {
         userPasswordField.text = User.sampleUser.password
         userEmailField.text = User.sampleUser.fullName;
         userDescriptionField.text = User.sampleUser.description;
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
+        userTextField.delegate = self
+        userPasswordField.delegate = self
+        userEmailField.delegate = self
        // userTextField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
         //userPasswordField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
         
         //saveChangesButton!.frame
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userTextField.resignFirstResponder()
+        userPasswordField.resignFirstResponder()
+        userEmailField.resignFirstResponder()
+        userDescriptionField.resignFirstResponder()
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     @objc func buttonTap() {

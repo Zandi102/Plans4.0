@@ -39,12 +39,22 @@ class EventListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
         tableView.delegate = self;
         tableView.dataSource = self;
         searchBar.delegate = self;
         searchBar.searchTextField.textColor = .orange
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
+        searchBar.delegate = self;
+        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchBar.resignFirstResponder()
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     

@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var usernameLogin: UITextField!
     
@@ -32,12 +32,19 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton?.addTarget(self, action: #selector(login), for: .touchUpInside)
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-        /*if(failedLogin == true) {
-            view.addSubview(label);
-            label.frame = CGRect.init(x: 20, y: view.frame.size.height - 100, width: view.frame.size.width - 40, height: 50);
-        }*/
+        usernameLogin.delegate = self;
+        passwordLogin.delegate = self
+        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        //view.addGestureRecognizer(tap)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        usernameLogin.resignFirstResponder()
+        passwordLogin.resignFirstResponder()
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     @objc func login (){
