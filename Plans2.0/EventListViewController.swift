@@ -43,6 +43,8 @@ class EventListViewController: UIViewController {
         tableView.dataSource = self;
         searchBar.delegate = self;
         searchBar.searchTextField.textColor = .orange
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     
@@ -90,10 +92,11 @@ extension EventListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
         let currentPlan: Plan;
-        if isFiltering() {
+        if self.isFiltering() == true {
             currentPlan = filteredPlans[indexPath.row];
         }
         else {
+            print(indexPath.row)
             currentPlan = User.sampleUser.plans[indexPath.row];
         }
         var cellConfig = cell.defaultContentConfiguration();
@@ -106,12 +109,19 @@ extension EventListViewController : UITableViewDataSource {
         
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        if User.sampleUser.plans[indexPath.row].ownerUsername == User.sampleUser.userName {
             let share = UITableViewRowAction(style: .normal, title: "Mark as Done") { action, index in
-
                 if self.isFiltering() == true {
                     print("Is Filtering");
                 }
                 else {
+                    let db = DBManager();
+                    let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
+                    let parameters: [String: Any] = [
+                        "plan_id": User.sampleUser.plans[indexPath.row].id,
+                    ]
+                    let message = db.postRequest(url, parameters)
+                    print(message);
                     User.sampleUser.plans.remove(at: indexPath.row)
                     tableView.reloadData()
                 }
@@ -119,6 +129,10 @@ extension EventListViewController : UITableViewDataSource {
             share.backgroundColor = UIColor.red
             return [share]
         }
+        else {
+            return nil
+        }
+    }
 }
 
 

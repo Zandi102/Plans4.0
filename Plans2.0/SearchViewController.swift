@@ -39,6 +39,8 @@ class SearchViewController: UIViewController {
         searchField.dataSource = self;
         searchBar.delegate = self;
         searchBar.searchTextField.textColor = .orange
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func filterContentForSearchText(searchText: String) {

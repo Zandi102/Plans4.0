@@ -42,6 +42,8 @@ class ViewController: UIViewController {
         userPasswordField.text = User.sampleUser.password
         userEmailField.text = User.sampleUser.fullName;
         userDescriptionField.text = User.sampleUser.description;
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
        // userTextField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
         //userPasswordField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
         
@@ -49,6 +51,8 @@ class ViewController: UIViewController {
     }
     
     @objc func buttonTap() {
+        User.sampleUser.fullName = self.userEmailField.text!
+        User.sampleUser.description = self.userDescriptionField.text!
         let db = DBManager();
         let url = URL(string: "http://abdasalaam.com/Functions/modifyUser.php")!
         let parameters: [String: Any] = [
@@ -61,11 +65,6 @@ class ViewController: UIViewController {
         ]
         let message = db.postRequest(url, parameters)
     }
-    
-    public func saveChanges() {
-        
-    }
-    
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
     
 

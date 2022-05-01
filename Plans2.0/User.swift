@@ -113,16 +113,9 @@ class User : Identifiable {
             user.age = 0
             user.password = resp.password
             user.description = resp.description
-            User.usernameFound = true
-            if User.usernameFound == true {
-                user.setFriends(username: username)
-            }
-            if User.usernameFound == true && User.friendsFound == true {
-                user.setInvites(username: username)
-            }
-            if User.invitesFound == true && User.friendsFound == true && User.usernameFound == true {
-                user.setPlans(username: username)
-            }
+            user.setFriends(username: username)
+            user.setInvites(username: username)
+            user.setPlans(username: username)
         }
         return user;
     }
@@ -258,7 +251,7 @@ class User : Identifiable {
                 //print(jsonData3)
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData);
                 print(resp.plan_name)
-                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username))
+                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
             }
         }
         if messages2.count > 0 {
@@ -269,7 +262,7 @@ class User : Identifiable {
                 //print(jsonData3)
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData2);
                 print(resp.plan_name)
-                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username))
+                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
             }
         }
         else {

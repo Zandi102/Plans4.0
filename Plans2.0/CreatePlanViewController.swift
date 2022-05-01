@@ -11,11 +11,25 @@
 //
 
 import UIKit
-
+import Foundation
 import CoreLocation
 
 class CreatePlanViewController: UIViewController {
-    // FIELDS
+    
+    private struct PlanStruct: Decodable {
+        enum Category: String, Decodable{
+            case swift, combine, debugging, xcode
+        }
+        let plan_id : String
+        let plan_name: String
+        let endTime : String
+        let startTime: String
+        let date: String
+        let description: String
+        let username: String
+        let address: String
+    }
+    
     let activeUser : User = User.sampleUser // represents the active user logged in, who uses the view controller
     var add_success : Bool = false          // represents if the plan has been added to the list
     // IBOUTLETS
@@ -79,6 +93,8 @@ class CreatePlanViewController: UIViewController {
         datePicker.overrideUserInterfaceStyle = .light
         createPlanButton?.addTarget(self, action: #selector(createPlan), for: .touchUpInside);
         cancelButton?.addTarget(self, action: #selector(cancel), for: .touchUpInside);
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
 
     }
     // the plan is valid, return a plan
@@ -215,7 +231,6 @@ class CreatePlanViewController: UIViewController {
                 let url = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
                 let parameters: [String: Any] = [
                     "plan_name":planName1,
-                        // "username":passwordField.text!, This must take the username from the global User class
                     "startTime":startPicker1,
                     "endTime":endPicker1,
                     "date":datePicker1,
@@ -225,9 +240,23 @@ class CreatePlanViewController: UIViewController {
                 ]
                 let message = db.postRequest(url, parameters)
                 print(message);
+                
+               /* let url2 = URL(string: "http://abdasalaam.com/Functions/getPlanID.php?plan_name=\(planName1)&address=\(addressName)&username=\(User.sampleUser.userName)")!
+                let parameters2: [String: Any] = [
+                    "plan_name":planName1,
+                    "address":addressName,
+                    "username": User.sampleUser.userName
+                ]
+                let message2 = db.getRequest(url2)
+                let jsonData = message2.data(using: .utf8)!
+                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData);
+                print(resp.plan_name)
+                plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
+                print(message2);
+                 
+ */
             }
             
-      
         }
     }
 }

@@ -30,12 +30,12 @@ public class SignUpViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100);
-
-       /* loginButton?.addTarget(self, action: #selector(switchScreen), for: .touchUpInside);
-        */
+        label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100)
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside);
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
+    
     
     @IBAction func unwindToSignup(_ sender: UIStoryboardSegue) {}
     

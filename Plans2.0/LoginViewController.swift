@@ -32,6 +32,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton?.addTarget(self, action: #selector(login), for: .touchUpInside)
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
         /*if(failedLogin == true) {
             view.addSubview(label);
             label.frame = CGRect.init(x: 20, y: view.frame.size.height - 100, width: view.frame.size.width - 40, height: 50);

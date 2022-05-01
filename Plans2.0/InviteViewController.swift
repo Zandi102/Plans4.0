@@ -22,6 +22,8 @@ class InviteViewController: UIViewController{
         super.viewDidLoad();
         tableView.delegate = self;
         tableView.dataSource = self;
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
         //tableView.backgroundColor = .systemGray2
         //title = "Invite List";
         //view.addSubview(table);

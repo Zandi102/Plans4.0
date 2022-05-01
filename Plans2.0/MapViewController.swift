@@ -23,6 +23,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var eventListButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    private var initialSet = false
 
     private var locationAccess = false;
 
@@ -53,6 +54,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.removeAnnotations(mapView.annotations)
         
         addMapOverlay(planList: activeUser.plans);
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
 
     
@@ -60,21 +63,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // gets the location of the current user
         guard let locationValue : CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
-        
-        // display user's current location on the map
-        mapView.setRegion(initialRegion, animated: false)
-
-        // place an annotation/pin on the user's location in the map display
         let userLocationPin : MKPointAnnotation = MKPointAnnotation()
-        userLocationPin.coordinate = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
         userLocationPin.title = "YOU"
         userLocationPin.subtitle = "this is you!"
-        
+        userLocationPin.coordinate = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
+        if(initialSet == false) {
+            let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+            let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
+            mapView.setRegion(initialRegion, animated: false)
+            initialSet = true;
+        }
         mapView.addAnnotation(userLocationPin)
         print("location = \(locationValue.latitude) \(locationValue.longitude)")
-
     }
 
     // adds all the annotations to the map
@@ -135,7 +135,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
     }

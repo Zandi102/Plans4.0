@@ -29,7 +29,7 @@ class Plan : Equatable, Identifiable {
 
     // Initialization Fields
 
-    public var id : String = UUID().uuidString  // the uniquely generated id of the plan
+    public var id : String   // the uniquely generated id of the plan
     public var title : String                    // title of the plan created by the owner
     public var date : String                       // the day of the plan
     public var day : Date
@@ -67,6 +67,7 @@ class Plan : Equatable, Identifiable {
         self.endTime1 = ""
         self.startTime1 = ""
         self.ownerUsername = owner.userName
+        self.id = ""
     }
     
     //Find plan based on plan ID
@@ -105,6 +106,7 @@ class Plan : Equatable, Identifiable {
         self.endTime1 = ""
         self.startTime1 = ""
         self.ownerUsername = owner.userName
+        self.id = ""
     }
     
     
@@ -121,8 +123,25 @@ class Plan : Equatable, Identifiable {
         self.endTime1 = ""
         self.startTime1 = ""
         self.ownerUsername = owner.userName
+        self.id = "";
     }
-    
+    //Constructor we use
+    init(title : String, day: Date, startTime : Date, endTime : Date,
+         address : String, notes : String, ownerUsername: String, plan_id: String) {
+        self.title = title
+        self.startTime = startTime
+        self.day = day
+        self.endTime = endTime
+        self.address = address
+        self.notes =  notes
+        self.ownerUsername = ownerUsername
+        self.date = ""
+        self.endTime1 = ""
+        self.startTime1 = ""
+        self.owner = User()
+        self.id = plan_id
+    }
+    //Other constructor we use
     init(title : String, day: Date, startTime : Date, endTime : Date,
          address : String, notes : String, ownerUsername: String) {
         self.title = title
@@ -136,6 +155,7 @@ class Plan : Equatable, Identifiable {
         self.endTime1 = ""
         self.startTime1 = ""
         self.owner = User()
+        self.id = ""
     }
     
 
@@ -153,6 +173,7 @@ class Plan : Equatable, Identifiable {
         self.day = Date()
         self.endTime = Date()
         self.ownerUsername = owner.userName
+        self.id = ""
 
     }
 
