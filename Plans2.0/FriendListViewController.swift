@@ -45,8 +45,13 @@ extension FriendListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
         var cellConfig = cell.defaultContentConfiguration();
-        cellConfig.text = friends[indexPath.row].fullName;
-        cellConfig.secondaryText = friends[indexPath.row].userName;
+        if (friends[indexPath.row].fullName.count < 3) {
+            cellConfig.text = friends[indexPath.row].userName;
+        }
+        else {
+            cellConfig.text = friends[indexPath.row].fullName;
+            cellConfig.secondaryText = friends[indexPath.row].userName;
+        }
         cellConfig.textProperties.color = .systemOrange;
         cellConfig.secondaryTextProperties.color = .systemOrange;
         cell.contentConfiguration = cellConfig;

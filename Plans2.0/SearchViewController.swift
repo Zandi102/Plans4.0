@@ -117,7 +117,6 @@ extension SearchViewController : UITableViewDelegate {
             label.textAlignment = .center
         }
         print(filteredUsers[indexPath.row].fullName);
-        
     }
 }
 
@@ -129,13 +128,18 @@ extension SearchViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
-        let currentUser :User;
+        let currentUser : User;
    
         currentUser = filteredUsers[indexPath.row];
         print("hi)");
         
         var cellConfig = cell.defaultContentConfiguration();
-        cellConfig.text = currentUser.fullName + ", " + currentUser.userName;
+        if (filteredUsers[indexPath.row].fullName.count < 3) {
+            cellConfig.text = filteredUsers[indexPath.row].userName;
+        }
+        else {
+            cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName;
+        }
         cellConfig.textProperties.color = .systemOrange;
         cellConfig.secondaryText = "Click to send invitation";
         cellConfig.secondaryTextProperties.color = .systemOrange;

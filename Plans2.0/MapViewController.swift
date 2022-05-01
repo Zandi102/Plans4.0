@@ -46,7 +46,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad();
         determineCurrentLocation()
-        mapView.frame.width
         backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
         // refresh annotations if needed
         mapView.delegate = self
@@ -61,7 +60,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // gets the location of the current user
         guard let locationValue : CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
         
         // display user's current location on the map

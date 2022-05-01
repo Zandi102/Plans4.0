@@ -30,7 +30,8 @@ class InviteViewController: UIViewController{
 }
 extension InviteViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if doubleClick == usersInv[indexPath.row].fullName {
+        if doubleClick != usersInv[indexPath.row].userName {
+            doubleClick = usersInv[indexPath.row].userName
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/approveFriend.php")!
             let parameters: [String: Any] = [
@@ -47,10 +48,6 @@ extension InviteViewController : UITableViewDelegate {
                 tableView.reloadData();
             }
         //print(invitations[indexPath.row]);
-            //
-        }
-        else {
-            doubleClick = usersInv[indexPath.row].fullName
         }
     }
 }
@@ -63,7 +60,14 @@ extension InviteViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
         var cellConfig = cell.defaultContentConfiguration();
-        cellConfig.text = usersInv[indexPath.row].fullName + ", " + usersInv[indexPath.row].userName;
+        if (usersInv[indexPath.row].fullName.count < 3) {
+            cellConfig.text = usersInv[indexPath.row].userName;
+            cellConfig.secondaryText = "Double Click to Add!";
+        }
+        else {
+            cellConfig.text = usersInv[indexPath.row].fullName + ", " + usersInv[indexPath.row].userName;
+            cellConfig.secondaryText = "Double Click to Add!";
+        }
         cellConfig.secondaryText = "Double Click to Add!";
         cellConfig.secondaryTextProperties.color = .systemOrange;
         cellConfig.textProperties.color = .systemOrange;
