@@ -24,6 +24,7 @@ class PlanDetailViewController : UIViewController {
         super.viewDidLoad()
         planTitle.text = Plan.planDetailView.title;
         planAddress.text = Plan.planDetailView.address;
+        planAddress.adjustsFontSizeToFitWidth = true;
         planDate.text = Plan.dayText(Plan.planDetailView.day)
         planTime.text = Plan.timeText(Plan.planDetailView.startTime) + " - " + Plan.timeText(Plan.planDetailView.endTime)
         planDescription.text = Plan.planDetailView.notes

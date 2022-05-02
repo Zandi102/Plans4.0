@@ -29,14 +29,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {
         User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
+        initialSet = false
         mapView.delegate = self
-        for annot in mapView.annotations {
-            if annot.title == "YOU" {
-            }
-            else {
-                mapView.removeAnnotation(annot)
-            }
-        }
         addMapOverlay(planList: activeUser.plans)
     }
 
@@ -46,6 +40,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     override func viewDidLoad() {
         super.viewDidLoad();
+        initialSet = false
         User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
         determineCurrentLocation()
         backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
@@ -62,20 +57,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     // location manager extension that gets the user's current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // gets the location of the current user
-        guard let locationValue : CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        let userLocationPin : MKPointAnnotation = MKPointAnnotation()
-        userLocationPin.title = "YOU"
-        userLocationPin.subtitle = "this is you!"
-        userLocationPin.coordinate = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
         if(initialSet == false) {
-            let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+            let userLocationPin : MKPointAnnotation = MKPointAnnotation()
+            guard let locationValue : CLLocationCoordinate2D = manager.location?.coordinate else { return }
+            userLocationPin.title = "YOU"
+            userLocationPin.subtitle = "This is you!"
+            userLocationPin.coordinate = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
+            let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
             let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
-            mapView.setRegion(initialRegion, animated: false)
+            mapView.setRegion(initialRegion, animated: true)
+            
+            mapView.addAnnotation(userLocationPin)
             initialSet = true;
         }
-        mapView.addAnnotation(userLocationPin)
-        print("location = \(locationValue.latitude) \(locationValue.longitude)")
     }
 
     // adds all the annotations to the map
@@ -99,13 +93,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // modifies the map annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MyMarker")
-        if annotation.title == "YOU" && annotation.subtitle == "this is you!" {
+        for annot in mapView.annotations {
+            if annot.title == "My Location" {
+                mapView.removeAnnotation(annot)
+            }
+        }
+        if annotation.title == "YOU" || annotation.subtitle == "This is you!" {
             annotationView.markerTintColor = .systemIndigo
             annotationView.glyphImage = UIImage(named: "bmoicon")
         }
-        else {
+        else if annotation.title != "YOU" && annotation.subtitle != "This is you!"{
             annotationView.markerTintColor = .systemOrange
             annotationView.glyphImage = UIImage(named: "connecticon")
+        }
+        else {
+            annotationView.markerTintColor = .systemIndigo
+            annotationView.glyphImage = UIImage(named: "bmoicon")
         }
         return annotationView
     }
