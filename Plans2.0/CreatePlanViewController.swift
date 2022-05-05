@@ -236,8 +236,8 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             if(CreatePlanViewController.isInvalid == false) {
                 let planName1 = self.planName.text!
                 let datePicker1 = self.datePicker.date.description;
-                let startPicker1 = self.startTimePicker.date.description;
-                let endPicker1 = self.endTimePicker.date.description;
+                let startPicker1 = Plan.timeText(self.startTimePicker.date)
+                let endPicker1 = Plan.timeText(self.endTimePicker.date)
                 let addressName = self.planAddress.text!
                 let planNotes1 = self.planNotes.text!
                 let db = DBManager();
