@@ -238,8 +238,8 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             if(CreatePlanViewController.isInvalid == false) {
                 let planName1 = self.planName.text!
                 let datePicker1 = self.datePicker.date
-                let startPicker1 = self.startTimePicker.date.addingTimeInterval(-3600 * 4)
-                let endPicker1 = self.endTimePicker.date.addingTimeInterval(-3600 * 4)
+                let startPicker1 = self.startTimePicker.date.addingTimeInterval(-(3600 * 4))
+                let endPicker1 = self.endTimePicker.date.addingTimeInterval(-(3600 * 4))
                 let addressName = self.planAddress.text!
                 let planNotes1 = self.planNotes.text!
                 let db = DBManager();
