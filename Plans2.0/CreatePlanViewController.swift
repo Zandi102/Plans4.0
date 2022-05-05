@@ -121,7 +121,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     private func validate(planToValidate : Plan) {
         // the return value could either be a plan or nil value
         // validate the start time and end time of the plan, to make sure that start time is > current date, and end time is > starttime
-        if planToValidate.day.compare(Date()).rawValue >= 0 && planToValidate.endTime.compare(planToValidate.startTime).rawValue > 0 {
+        if planToValidate.day.compare(Date()).rawValue > 0 || planToValidate.day == Date(){
             // validate the address string input of the plan
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
             valid_coord(plan: planToValidate) { (complete, error) in
