@@ -43,7 +43,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     private var isAddressInvalid = false
     private var isTimeInvalid = false
     private var isDateInvalid = false
-    private static var isInvalid = false
+    private var isInvalid = false
     private var planCreated = false
     // RESPONSE TO USER INPUTS LABEL
     private let successPlan: UILabel = {
@@ -126,12 +126,12 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
             valid_coord(plan: planToValidate) { (complete, error) in
                 if error == nil {
-                    if(CreatePlanViewController.isInvalid == true) {
+                    if(self.isInvalid == true) {
                         self.failPlan.removeFromSuperview()
-                        CreatePlanViewController.isInvalid = false
+                        self.isInvalid = false
                         //self.isTimeInvalid = false
                     }
-                    CreatePlanViewController.isInvalid = false
+                    self.isInvalid = false
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true
                     //planToValidate.owner = self.activeUser
@@ -165,7 +165,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                 }
                 else {
                     self.isAddressInvalid = true
-                    CreatePlanViewController.isInvalid = true
+                    self.isInvalid = true
                     self.view.addSubview(self.failPlan)
                     self.view.addSubview(self.checkAddressInput)
                     if(self.isTimeInvalid == true) {
@@ -185,7 +185,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
         else {
             self.isTimeInvalid = true
-            CreatePlanViewController.isInvalid = true
+            self.isInvalid = true
             self.view.addSubview(self.failPlan)
             self.view.addSubview(self.checkTimeInput)
             if(self.isAddressInvalid == true) {
@@ -231,11 +231,15 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             let startTime : Date = self.startTimePicker.date.addingTimeInterval(dayDifference)
             let endTime   : Date = self.endTimePicker.date.addingTimeInterval(dayDifference)
             let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.sampleUser.userName)
+            
             validate(planToValidate: planToAdd)
-            print(CreatePlanViewController.isInvalid)
-            if(CreatePlanViewController.isInvalid == false) {
+            
+            print(self.isInvalid)
+            let cond = self.isInvalid
+            print(cond)
+            if(cond == false) {
                 let planName1 = self.planName.text!
-                let datePicker1 = self.datePicker.date.description;
+                let datePicker1 = self.datePicker.date.addingTimeInterval(-dayDifference);
                 let startPicker1 = Plan.timeText(self.startTimePicker.date)
                 let endPicker1 = Plan.timeText(self.endTimePicker.date)
                 let addressName = self.planAddress.text!
