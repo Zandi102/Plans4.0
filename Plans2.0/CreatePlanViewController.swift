@@ -121,17 +121,39 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     private func validate(planToValidate : Plan) {
         // the return value could either be a plan or nil value
         // validate the start time and end time of the plan, to make sure that start time is > current date, and end time is > starttime
-        if planToValidate.day.compare(Date()).rawValue > 0 || planToValidate.day == Date(){
+        if (planToValidate.day.compare(Date()).rawValue > 0 || Plan.dayText(planToValidate.day) == Plan.dayText(Date())) && planToValidate.startTime.compare(Date().addingTimeInterval(-120)).rawValue > 0 {
             // validate the address string input of the plan
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
             valid_coord(plan: planToValidate) { (complete, error) in
                 if error == nil {
-                    if(CreatePlanViewController.isInvalid == true) {
+                    if(self.isTimeInvalid == true) {
+                        self.checkTimeInput.removeFromSuperview()
                         self.failPlan.removeFromSuperview()
-                        CreatePlanViewController.isInvalid = false
-                        //self.isTimeInvalid = false
                     }
-                    CreatePlanViewController.isInvalid = false
+                    if(self.isAddressInvalid == true) {
+                        self.checkAddressInput.removeFromSuperview()
+                        self.failPlan.removeFromSuperview()
+                    }
+                    let planName1 = planToValidate.title
+                    let datePicker1 = planToValidate.day
+                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + 60)
+                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + 60)
+                    let addressName = planToValidate.address!
+                    let planNotes1 = planToValidate.notes
+                    let db = DBManager();
+                    let url : URL = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
+                    let username = User.sampleUser.userName
+                        let parameters: [String: Any] = [
+                            "plan_name":planName1,
+                            "startTime":startPicker1,
+                            "endTime":endPicker1,
+                            "date":datePicker1,
+                            "address":addressName,
+                            "description":planNotes1,
+                            "username": username
+                        ]
+                    let message = db.postRequest(url, parameters)
+                    print(message);
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true
                     //planToValidate.owner = self.activeUser
@@ -143,13 +165,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                     self.view.addSubview(self.backToMap)
                     self.planCreated = true
 
-                    if(self.isTimeInvalid == true) {
-                        self.checkTimeInput.removeFromSuperview()
-                    }
-                    if(self.isAddressInvalid == true) {
-                        self.checkAddressInput.removeFromSuperview()
-                        //self.isAddressInvalid = false
-                    }
                     self.successPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50)
                     self.successPlan.textAlignment = .center
                     self.backToMap.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 75, width: self.view.bounds.width, height: 50)
@@ -234,31 +249,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             
             validate(planToValidate: planToAdd)
             
-            print(CreatePlanViewController.isInvalid)
-            if(CreatePlanViewController.isInvalid == false) {
-                let planName1 = self.planName.text!
-                let datePicker1 = self.datePicker.date
-                let startPicker1 = self.startTimePicker.date.addingTimeInterval(-(3600 * 4))
-                let endPicker1 = self.endTimePicker.date.addingTimeInterval(-(3600 * 4))
-                let addressName = self.planAddress.text!
-                let planNotes1 = self.planNotes.text!
-                let db = DBManager();
-                let url : URL = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
-                //let username = User.sampleUser.userName
-                //let plan_name = planName1
-                //let address = addressName
-                //let url2 : URL? = URL(string: "http://abdasalaam.com/Functions/getPlanID.php?plan_name=\(plan_name)&address=\(address)&username=\(username)")
-                let parameters: [String: Any] = [
-                    "plan_name":planName1,
-                    "startTime":startPicker1,
-                    "endTime":endPicker1,
-                    "date":datePicker1,
-                    "address":addressName,
-                    "description":planNotes1,
-                    "username": User.sampleUser.userName
-                ]
-                let message = db.postRequest(url, parameters)
-                print(message);
 
                 /*let message2 = db.getRequest(url2!)
                 if message2.count > 0 {
@@ -270,7 +260,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                 
  
                 }*/
-            }
+            
         }
     }
 }

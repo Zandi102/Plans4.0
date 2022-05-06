@@ -76,7 +76,9 @@ class ViewController: UIViewController, UITextFieldDelegate{
         ]
         let message = db.postRequest(url, parameters)
     }
-    @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
+    @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {
+        User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
+    }
     
 
 }

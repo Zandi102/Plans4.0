@@ -98,9 +98,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func switchScreen() {
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main);
-        if let viewController = mainStoryboard.instantiateViewController(withIdentifier: "MapNav") as? UIViewController {
-            self.present(viewController, animated: false, completion: nil);
-        }
+        let homeViewController = storyboard?.instantiateViewController(identifier: "MapNav") as? UINavigationController
+        homeViewController?.hidesBottomBarWhenPushed = false
+        view.window?.rootViewController = homeViewController
+        view.window?.makeKeyAndVisible()
     }
 }

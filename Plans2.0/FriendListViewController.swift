@@ -56,4 +56,21 @@ extension FriendListViewController : UITableViewDataSource {
         cell.contentConfiguration = cellConfig;
         return cell;
     }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var parameters1: [String: Any] = [:]
+        let share = UITableViewRowAction(style: .normal, title: "Delete Friend") { action, index in
+            let db = DBManager();
+            let url = URL(string: "http://abdasalaam.com/Functions/deleteFriend.php")!
+            print(self.friends[indexPath.row])
+            parameters1 = [
+                "username1": User.sampleUser.userName,
+                "username2": self.friends[indexPath.row].userName
+            ]
+            let message = db.postRequest(url, parameters1)
+            self.friends.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        share.backgroundColor = UIColor.red
+        return [share]
+    }
 }

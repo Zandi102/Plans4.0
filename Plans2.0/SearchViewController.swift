@@ -79,7 +79,7 @@ class SearchViewController: UIViewController {
     
     func numberOfInvites(username1: String, username2 : String) -> Int {
         let db = DBManager();
-        let url = URL(string: "http://abdasalaam.com/Functions/loadInvitationsBetweenFriends.php?username1=\(username1)&username2=\(username2)")!
+        let url = (URL(string: "http://abdasalaam.com/Functions/loadInvitationsBetweenFriends.php?username1=\(username1)&username2=\(username2)"))!
         let messages = db.getRequest(url)
         //message will contain the username and the name of friends that have isAdded = 1 for the corresponing user
         return messages.count
@@ -98,39 +98,7 @@ class SearchViewController: UIViewController {
 }
 extension SearchViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var parameters: [String: Any] = [:]
-        if self.numberOfInvites(username1: User.sampleUser.userName, username2: filteredUsers[indexPath.row].userName) < 1 {
-            if doubleClick == filteredUsers[indexPath.row].fullName {
-                let db = DBManager();
-                let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
-                if isFiltering() {
-                    print(filteredUsers[indexPath.row])
-                    parameters = [
-                        "username1": User.sampleUser.userName,
-                        "username2": filteredUsers[indexPath.row].userName
-                    ]
-                }
-                else {
-                    print(usersInvited[indexPath.row])
-                    parameters = [
-                        "username1": User.sampleUser.userName,
-                        "username2": usersInvited[indexPath.row].userName
-                    ]
-                }
-                let message = db.postRequest(url, parameters)
-                
-                            //print(invitations[indexPath.row]);
-                //
-            }
-            doubleClick = filteredUsers[indexPath.row].fullName
-        }
-        else {
-            print("Cant send more than one invite")
-            view.addSubview(label)
-            label.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 600, width: self.view.bounds.width, height: 50)
-            label.textAlignment = .center
-        }
-        print(filteredUsers[indexPath.row].fullName);
+
     }
 }
 
@@ -155,10 +123,44 @@ extension SearchViewController : UITableViewDataSource {
             cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName;
         }
         cellConfig.textProperties.color = .systemOrange;
-        cellConfig.secondaryText = "Click to send invitation";
+        cellConfig.secondaryText = "Swipe to send invitation";
         cellConfig.secondaryTextProperties.color = .systemOrange;
         cell.contentConfiguration = cellConfig;
         return cell;
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var parameters: [String: Any] = [:]
+        if (true == true) {
+            let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
+                let db = DBManager();
+                let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
+                if self.isFiltering() {
+                    print(self.filteredUsers[indexPath.row])
+                    parameters = [
+                        "username1": User.sampleUser.userName,
+                        "username2": self.filteredUsers[indexPath.row].userName
+                    ]
+                }
+                else {
+                    print(self.usersInvited[indexPath.row])
+                    parameters = [
+                        "username1": User.sampleUser.userName,
+                        "username2": self.usersInvited[indexPath.row].userName
+                    ]
+                }
+                let message = db.postRequest(url, parameters)
+            }
+            share.backgroundColor = UIColor.green
+            if (self.numberOfInvites(username1:User.sampleUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
+                return [share]
+            }
+            else {
+                return nil
+            }
+        }
+        else {
+            return nil
+        }
     }
 }
 

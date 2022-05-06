@@ -31,8 +31,8 @@ extension InviteViewController : UITableViewDelegate {
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/approveFriend.php")!
             let parameters: [String: Any] = [
-                "username1":User.sampleUser.userName,
-                "username2":usersInv[indexPath.row].userName
+                "username1": usersInv[indexPath.row].userName,
+                "username2":User.sampleUser.userName
             ]
             let message = db.postRequest(url, parameters)
             if (message == "Request is now approved") {

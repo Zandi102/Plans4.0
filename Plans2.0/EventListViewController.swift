@@ -39,7 +39,6 @@ class EventListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
         tableView.delegate = self;
         tableView.dataSource = self;
         searchBar.delegate = self;
