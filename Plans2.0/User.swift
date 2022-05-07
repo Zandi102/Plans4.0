@@ -214,7 +214,16 @@ class User : Identifiable {
             print("No friends Found")
         }
     }
-
+    /*private static func removeDupInvite(invites : [User]) -> [User] {
+        var removedInvites = [User]()
+        for invite in invites {
+            if(invite.userName != User.sampleUser.userName) {
+                removedInvites.append(invite)
+            }
+        }
+        return removedInvites
+    }*/
+    
     private func setInvites(username : String) {
         let db = DBManager();
         let url = URL(string: "http://abdasalaam.com/Functions/loadPendingFriends.php?username=\(username)")!
