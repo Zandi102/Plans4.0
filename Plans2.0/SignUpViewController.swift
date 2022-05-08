@@ -8,31 +8,30 @@ import UIKit
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var usernameField: UITextField!;
+    @IBOutlet weak var usernameField: UITextField!
     
-    @IBOutlet weak var passwordField: UITextField!;
+    @IBOutlet weak var passwordField: UITextField!
     
-    @IBOutlet weak var emailField: UITextField!;
+    @IBOutlet weak var emailField: UITextField!
     
-    @IBOutlet weak var phoneNumberField: UITextField!;
+    @IBOutlet weak var phoneNumberField: UITextField!
     
-    @IBOutlet weak var registerButton: UIButton!;
+    @IBOutlet weak var registerButton: UIButton!
     
-    @IBOutlet weak var loginButton: UIButton!;
+    @IBOutlet weak var loginButton: UIButton!
     
-    public var publicUsername : String = "";
     
     private let label: UILabel = {
-        let label = UILabel();
-        label.textColor = .systemRed;
-        return label;
+        let label = UILabel()
+        label.textColor = .systemRed
+        return label
     }();
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100)
-        registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside);
-        usernameField.delegate = self;
+        registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside)
+        usernameField.delegate = self
         passwordField.delegate = self
         //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         //view.addGestureRecognizer(tap)
@@ -51,16 +50,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func unwindToSignup(_ sender: UIStoryboardSegue) {}
     
     @objc func register () {
-        let passLength = passwordField.text!;
-        let userLength = usernameField.text!;
+        let passLength = passwordField.text!
+        let userLength = usernameField.text!
         if(passLength.count < 7 || userLength.count < 2) {
-            view.addSubview(label);
-            label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+            view.addSubview(label)
+            label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
             label.textAlignment = .center
             label.text = "Invalid user credentials."
-           
-            usernameField.text = "";
-            passwordField.text = "";
+            usernameField.text = ""
+            passwordField.text = ""
             //emailField.text = "";
             //phoneNumberField.text = "";
         }
@@ -73,24 +71,24 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             ]
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
-                //emailField.text = "";
-                //phoneNumberField.text = "";
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
+                //emailField.text = ""
+                //phoneNumberField.text = ""
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
                 //publicUsername will be used in other view controllers to find the info related to the user logged in
-                User.sampleUser = User.createCurrentUser(usernameField.text!)
-                switchScreen();
+                User.currentUser = User.createCurrentUser(usernameField.text!)
+                switchScreen()
             }
             else if (message == "User already exist") {
                 print(message)
-                view.addSubview(label);
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+                view.addSubview(label)
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Username already taken."
             }
             else {
                 view.addSubview(label);
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Error. Please try again."
             }

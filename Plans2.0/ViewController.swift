@@ -16,6 +16,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
       //  return imageView
         
    // }()
+    
+    @IBOutlet weak var username: UILabel!
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var userPasswordField: UITextField!
@@ -23,25 +25,27 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var userDescriptionField: UITextView!
     
     @IBOutlet weak var saveChangesButton: UIButton? = {
-        let saveChangesButton = UIButton();
-        saveChangesButton.backgroundColor = .white;
-        return saveChangesButton;
+        let saveChangesButton = UIButton()
+        saveChangesButton.backgroundColor = .white
+        return saveChangesButton
     }()
     
     
     private let button: UIButton = {
-        let button = UIButton();
-        button.backgroundColor = .red;
+        let button = UIButton()
+        button.backgroundColor = .red
         return button;
     }()
     override func viewDidLoad() {
         super.viewDidLoad();
-        saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside);
-        saveChangesButton!.frame = CGRect.init(x: 0, y: view.frame.size.height - 250, width: self.view.bounds.width, height: 100);
-        userTextField.text = User.sampleUser.userName
-        userPasswordField.text = User.sampleUser.password
-        userEmailField.text = User.sampleUser.fullName;
-        userDescriptionField.text = User.sampleUser.description;
+        saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+        saveChangesButton!.frame = CGRect.init(x: 0, y: view.frame.size.height - 250, width: self.view.bounds.width, height: 100)
+        self.username.text = User.currentUser.userName
+        self.username.adjustsFontSizeToFitWidth = true
+        userTextField.text = User.currentUser.userName
+        userPasswordField.text = User.currentUser.password
+        userEmailField.text = User.currentUser.fullName;
+        userDescriptionField.text = User.currentUser.description;
         userTextField.delegate = self
         userPasswordField.delegate = self
         userEmailField.delegate = self
@@ -62,13 +66,13 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
     @objc func buttonTap() {
-        User.sampleUser.fullName = self.userEmailField.text!
-        User.sampleUser.description = self.userDescriptionField.text!
+        User.currentUser.fullName = self.userEmailField.text!
+        User.currentUser.description = self.userDescriptionField.text!
         let db = DBManager();
         let url = URL(string: "http://abdasalaam.com/Functions/modifyUser.php")!
         let parameters: [String: Any] = [
-            "username":User.sampleUser.userName,
-            "password":User.sampleUser.password,
+            "username":User.currentUser.userName,
+            "password":User.currentUser.password,
             "age":"0",
             "phone":"0",
             "name":userEmailField.text!,

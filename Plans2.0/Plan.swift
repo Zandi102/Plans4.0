@@ -209,8 +209,6 @@ class Plan : Equatable, Identifiable {
         self.owner = newOwner
     }
 
-    
-
     // gets the day text
 
     static func dayText(_ date : Date) -> String {
@@ -218,7 +216,6 @@ class Plan : Equatable, Identifiable {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.setLocalizedDateFormatFromTemplate("MMM dd, yyyy")
         return formatter.string(from: date)
-
     }
 
 

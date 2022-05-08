@@ -17,7 +17,7 @@ class InviteViewController: UIViewController{
     
     @IBOutlet var tableView: UITableView!;
     var doubleClick : String = ""
-    var usersInv = User.sampleUser.invites
+    var usersInv = User.currentUser.invites
     override func viewDidLoad() {
         //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
         super.viewDidLoad();
@@ -32,12 +32,12 @@ extension InviteViewController : UITableViewDelegate {
             let url = URL(string: "http://abdasalaam.com/Functions/approveFriend.php")!
             let parameters: [String: Any] = [
                 "username1": usersInv[indexPath.row].userName,
-                "username2":User.sampleUser.userName
+                "username2":User.currentUser.userName
             ]
             let message = db.postRequest(url, parameters)
             if (message == "Request is now approved") {
-                User.sampleUser.addFriend(user: usersInv[indexPath.row])
-                User.sampleUser.removeInvite(username: usersInv[indexPath.row].userName)
+                User.currentUser.addFriend(user: usersInv[indexPath.row])
+                User.currentUser.removeInvite(username: usersInv[indexPath.row].userName)
                 usersInv.remove(at: indexPath.row)
                 //User.sampleUser.invites.removeAll(where: User.username == usersInv[indexPath.row].userName)
                 

@@ -130,7 +130,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zq9-jN-HbH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="pCo-OH-mdU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4252.1739130434789" y="-177.45535714285714"/>
+            <point key="canvasLocation" x="4316" y="-269"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="RYA-oz-dk9">
@@ -378,7 +378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OFl-5f-kgt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5569.5652173913049" y="-929.46428571428567"/>
+            <point key="canvasLocation" x="5633" y="-1021"/>
         </scene>
         <!--Event List View Controller-->
         <scene sceneID="KKP-bu-b8G">
@@ -464,7 +464,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I2P-cN-U52" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5570" y="386"/>
+            <point key="canvasLocation" x="5632" y="483"/>
         </scene>
         <!--Plan Detail View Controller-->
         <scene sceneID="XZ3-cJ-tTg">
@@ -562,7 +562,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zU9-Wc-eI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="euw-RR-IA9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6862" y="581"/>
+            <point key="canvasLocation" x="7048" y="1213"/>
         </scene>
         <!--User Profile-->
         <scene sceneID="tne-QT-ifu">
@@ -608,7 +608,7 @@
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sf5-Us-QDF">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sf5-Us-QDF">
                                 <rect key="frame" x="20" y="67" width="205" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="30"/>
@@ -618,7 +618,6 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MrU-m7-cj6">
                                 <rect key="frame" x="233" y="67" width="47" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.01076690573" green="0.05219753832" blue="0.1848035455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <state key="normal">
                                     <color key="titleColor" systemColor="systemOrangeColor"/>
@@ -662,7 +661,7 @@
                                 </state>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NaB-U5-URh">
-                                <rect key="frame" x="20" y="134" width="190" height="170"/>
+                                <rect key="frame" x="20" y="134" width="184" height="168"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
@@ -703,11 +702,12 @@
                         <outlet property="userEmailField" destination="mVr-Lc-Z0g" id="Swc-7h-hkC"/>
                         <outlet property="userPasswordField" destination="rFo-cz-2ev" id="h19-Cv-23l"/>
                         <outlet property="userTextField" destination="xLT-CF-7AX" id="0rL-BJ-tJN"/>
+                        <outlet property="username" destination="sf5-Us-QDF" id="mxo-Kh-7Ig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6985.507246376812" y="-177.45535714285714"/>
+            <point key="canvasLocation" x="7047.826086956522" y="-269.19642857142856"/>
         </scene>
         <!--Friend List View Controller-->
         <scene sceneID="XPz-as-kyO">
@@ -735,11 +735,14 @@
                                             <color key="backgroundColor" red="0.018393488600000001" green="0.058848030869999998" blue="0.1887350082" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.01076690573" green="0.05219753832" blue="0.1848035455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="lrb-Q5-li8" kind="show" id="rIf-vp-Sjc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ylt-1G-ycG">
-                                <rect key="frame" x="31" y="48" width="26" height="22"/>
+                                <rect key="frame" x="20" y="48" width="40" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                 <state key="normal">
@@ -768,7 +771,72 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0g6-Ed-frq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="T48-gA-Na5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8442" y="-177"/>
+            <point key="canvasLocation" x="8502.898550724638" y="-269.19642857142856"/>
+        </scene>
+        <!--Friend View Controller-->
+        <scene sceneID="Tej-6c-Zu3">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="lrb-Q5-li8" customClass="FriendViewController" customModule="Plans2_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uCJ-Iw-Wvq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friend Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOx-qj-oza">
+                                <rect key="frame" x="74" y="44" width="265" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="40"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="rI0-Cz-8SA">
+                                <rect key="frame" x="20" y="130.5" width="52" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imw-KK-I1E">
+                                <rect key="frame" x="72" y="130.5" width="266" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list.bullet.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="VQw-FY-N8g">
+                                <rect key="frame" x="20" y="230" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vaz-7a-Yi8">
+                                <rect key="frame" x="72" y="229" width="264" height="204"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.01076690573" green="0.05219753832" blue="0.1848035455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BYi-3z-C8a">
+                                <rect key="frame" x="20" y="44" width="37" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="arrowshape.turn.up.backward.fill" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <segue destination="GVt-4g-yKb" kind="unwind" unwindAction="unwindToFriendList:" id="jxf-yN-t9Y"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="KSk-Xo-yQa"/>
+                        <color key="backgroundColor" red="0.01076690573" green="0.05219753832" blue="0.1848035455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="k1t-gI-E6r"/>
+                    <connections>
+                        <outlet property="descriptionField" destination="Vaz-7a-Yi8" id="xrL-ai-CbR"/>
+                        <outlet property="nameField" destination="imw-KK-I1E" id="DtC-EB-D0x"/>
+                        <outlet property="usernameField" destination="MOx-qj-oza" id="8Od-Tw-aOi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h0R-Yh-xuI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="GVt-4g-yKb" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="10243.478260869566" y="-269.19642857142856"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="1kV-Hl-g8Z">
@@ -839,7 +907,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K3s-Eh-7M2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="veS-ro-4pq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8441" y="655"/>
+            <point key="canvasLocation" x="8503" y="484"/>
         </scene>
         <!--Invite View Controller-->
         <scene sceneID="PIu-G8-6Vm">
@@ -905,7 +973,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WsC-xq-pUi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="sgL-Lm-ZPs" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8440.579710144928" y="-1025.2232142857142"/>
+            <point key="canvasLocation" x="8503" y="-1021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hj0-Bz-BAE">
@@ -949,14 +1017,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yBZ-W4-Ujj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4254" y="-929"/>
+            <point key="canvasLocation" x="4317" y="-1021"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="VcO-8Z-TaS"/>
-        <segue reference="C1Q-Um-tAr"/>
+        <segue reference="2bU-EG-kJa"/>
         <segue reference="JVA-Zr-rlI"/>
-        <segue reference="CRd-Ae-7HF"/>
+        <segue reference="fTt-f8-CqH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemOrangeColor"/>
     <resources>
@@ -964,6 +1032,7 @@
         <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="106"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="clock.fill" catalog="system" width="128" height="121"/>
+        <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
         <image name="list.dash" catalog="system" width="128" height="85"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="mappin" catalog="system" width="105" height="128"/>

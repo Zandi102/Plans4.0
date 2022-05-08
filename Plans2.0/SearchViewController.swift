@@ -137,21 +137,21 @@ extension SearchViewController : UITableViewDataSource {
                 if self.isFiltering() {
                     print(self.filteredUsers[indexPath.row])
                     parameters = [
-                        "username1": User.sampleUser.userName,
+                        "username1": User.currentUser.userName,
                         "username2": self.filteredUsers[indexPath.row].userName
                     ]
                 }
                 else {
                     print(self.usersInvited[indexPath.row])
                     parameters = [
-                        "username1": User.sampleUser.userName,
+                        "username1": User.currentUser.userName,
                         "username2": self.usersInvited[indexPath.row].userName
                     ]
                 }
                 let message = db.postRequest(url, parameters)
             }
             share.backgroundColor = UIColor.green
-            if (self.numberOfInvites(username1:User.sampleUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
+            if (self.numberOfInvites(username1:User.currentUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
                 return [share]
             }
             else {

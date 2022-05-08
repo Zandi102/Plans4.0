@@ -2,6 +2,8 @@ import Foundation
 
 class User : Identifiable {
     
+    static var currentUser = User(userName: "Hi", password: "Hi")
+    
     private struct UserStruct: Decodable {
         enum Category: String, Decodable{
             case swift, combine, debugging, xcode
@@ -59,10 +61,8 @@ class User : Identifiable {
     public var userPlans : [Plan] = []
     public var friends : [User] = []
     public var invites : [User] = []
-    public var isAdded : Int = 0
-    private static var usernameFound = false;
-    private static var invitesFound = false;
-    private static var friendsFound = false;
+    //public var isAdded : Int = 0
+    public static var friendToShow : User = User();
     // private var timeZone : TimeZone = TimeZone.autoupdatingCurrent
     // private var calender : Calendar = Calendar.autoupdatingCurrent
     init() {
@@ -80,10 +80,10 @@ class User : Identifiable {
         let messages = db.getRequest(url)
         if messages.count > 0 {
             let userFields = messages[0]
-            print("In User Class")
-            print(userFields)
+            //print("In User Class")
+            //print(userFields)
             let jsonData = userFields.data(using: .utf8)!
-            let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData);
+            let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData)
             self.fullName = resp.name
             self.userName = resp.username
             self.phone = 0
@@ -97,16 +97,16 @@ class User : Identifiable {
      }
     
     public static func createCurrentUser(_ username : String) -> User {
-        let user : User = User();
-        let db = DBManager();
+        let user : User = User()
+        let db = DBManager()
         let url : URL = URL(string: "http://abdasalaam.com/Functions/loadUser.php?username=\(username)")!
         let messages = db.getRequest(url)
         if messages.count > 0 {
             let userFields = messages[0]
-            print("In User Class")
-            print(userFields)
+            //print("In User Class")
+            //print(userFields)
             let jsonData = userFields.data(using: .utf8)!
-            let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData);
+            let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData)
             user.fullName = resp.name
             user.userName = resp.username
             user.phone = 0
@@ -195,7 +195,7 @@ class User : Identifiable {
     }
     
     private func setFriends(username : String) {
-        let db = DBManager();
+        let db = DBManager()
         let url = URL(string: "http://abdasalaam.com/Functions/loadFriends.php?username=\(username)")!
         let messages = db.getRequest(url)
         self.friends = [User]()
@@ -203,11 +203,10 @@ class User : Identifiable {
         if messages.count > 0 {
             for message in messages {
                 print("In User Class loading Friends")
-                print(message)
+                //print(message)
                 let jsonData = message.data(using: .utf8)!
-                let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData);
+                let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData)
                 friends.append(User(username: resp.username2, name: resp.name))
-                User.friendsFound = true;
             }
         }
         else {
@@ -225,7 +224,7 @@ class User : Identifiable {
     }*/
     
     private func setInvites(username : String) {
-        let db = DBManager();
+        let db = DBManager()
         let url = URL(string: "http://abdasalaam.com/Functions/loadPendingFriends.php?username=\(username)")!
         let messages = db.getRequest(url)
         self.invites = [User]()
@@ -233,11 +232,10 @@ class User : Identifiable {
         if messages.count > 0 {
             for message in messages {
                 print("In User Class")
-                print(message)
+                //print(message)
                 let jsonData = message.data(using: .utf8)!
-                let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData);
+                let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData)
                 invites.append(User(username: resp.username2, name: resp.name))
-                User.invitesFound = true;
             }
         }
         else {
@@ -251,17 +249,17 @@ class User : Identifiable {
         let url2 = URL(string: "http://abdasalaam.com/Functions/loadUserPlans.php?username=\(username)")!
         let messages = db.getRequest(url)
         let messages2 = db.getRequest(url2)
-        self.plans = [Plan]();
+        self.plans = [Plan]()
         if messages.count > 0 {
             for message in messages {
                 print("In Plan Class")
-                print(message)
+                //print(message)
                 let jsonData = message.data(using: .utf8)!
                 //print(jsonData3)
-                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData);
+                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData)
                 print(resp.plan_name)
                 if(Plan.textToDate(resp.date).compare(Date()).rawValue < 0 && Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())) {
-                    print(resp.plan_name + " is" + " completed");
+                    //print(resp.plan_name + " is" + " completed");
 //                    //delete plan from database
 //                    let db = DBManager();
 //                    let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
@@ -279,15 +277,15 @@ class User : Identifiable {
         if messages2.count > 0 {
             for message2 in messages2 {
                 print("In Plan Class")
-                print(message2)
+                //print(message2)
                 let jsonData2 = message2.data(using: .utf8)!
                 //print(jsonData3)
-                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData2);
+                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData2)
                 print(resp.plan_name)
                 if(Plan.textToDate(resp.date).compare(Date()).rawValue < 0 && Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())){
-                    print(Plan.textToDate(resp.date))
+                    //print(Plan.textToDate(resp.date))
                     //&& Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())
-                    print(resp.plan_name + " is" + " completed");
+                    //print(resp.plan_name + " is" + " completed");
 //                    //delete plan from database
 //                    let db = DBManager();
 //                    let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
@@ -311,7 +309,7 @@ class User : Identifiable {
 }
 #if DEBUG
 extension User {
-    private static var friend1  = User(fullName: "Jack Torres", userName: "jack2012", email: "jack@mail.com", phone: 2345678901, age: 21, password: "password123").addPlan(
+    private static var friend1 = User(fullName: "Jack Torres", userName: "jack2012", email: "jack@mail.com", phone: 2345678901, age: 21, password: "password123").addPlan(
         Plan(title: "Dinner at Piada",
              startTime: Date().addingTimeInterval(2500.0),
              endTime: Date().addingTimeInterval(5000.0),
@@ -327,7 +325,7 @@ extension User {
              endTime: Date().addingTimeInterval(9000.0),
              address: "1261 W 6th St, Cleveland, OH 44113",
              notes: ""))
-    private static var friend2  = User(fullName: "Frank Miller", userName: "frankie2005", email: "frankie@mail.com", phone: 4567890123, age: 21, password: "password123").addPlan(
+    private static var friend2 = User(fullName: "Frank Miller", userName: "frankie2005", email: "frankie@mail.com", phone: 4567890123, age: 21, password: "password123").addPlan(
         Plan(title: "fiji rave",
              startTime: Date().addingTimeInterval(4550.0),
              endTime: Date().addingTimeInterval(6000.0),
@@ -338,7 +336,7 @@ extension User {
             endTime: Date().addingTimeInterval(24000.0),
             address: "Lakewood",
             notes: "bring trunks!"))
-    private static var friend3  = User(fullName: "Eddie Johnson", userName: "eddie01", email: "eddie01@mail.com", phone: 5678901234, age: 21, password: "password123").addPlan(
+    private static var friend3 = User(fullName: "Eddie Johnson", userName: "eddie01", email: "eddie01@mail.com", phone: 5678901234, age: 21, password: "password123").addPlan(
         Plan(title: "Movie Night",
              startTime: Date().addingTimeInterval(24300.0),
              endTime: Date().addingTimeInterval(32300.0),
@@ -354,7 +352,7 @@ extension User {
              endTime: Date().addingTimeInterval(15100.0),
              address: "beachwood mall",
              notes: "the mall"))
-    private static var friend4  = User(fullName: "Mark Zuckerberg", userName: "markFacebook!!", email: "markZ@gmail.com", phone: 2848328834, age: 21, password: "password123").addPlan(
+    private static var friend4 = User(fullName: "Mark Zuckerberg", userName: "markFacebook!!", email: "markZ@gmail.com", phone: 2848328834, age: 21, password: "password123").addPlan(
         Plan(title: "Dinner at Piada",
              startTime: Date().addingTimeInterval(2500.0),
              endTime: Date().addingTimeInterval(5000.0),
@@ -370,7 +368,7 @@ extension User {
              endTime: Date().addingTimeInterval(9000.0),
              address: "1261 W 6th St, Cleveland, OH 44113",
              notes: ""))
-    private static var friend5  = User(fullName: "Helen Molteini", userName: "hlm35", email: "helenmolteini@gmail.com", phone: 2848328834, age: 21, password: "chicken").addPlan(
+    private static var friend5 = User(fullName: "Helen Molteini", userName: "hlm35", email: "helenmolteini@gmail.com", phone: 2848328834, age: 21, password: "chicken").addPlan(
         Plan(title: "Dinner at Piada",
              startTime: Date().addingTimeInterval(2500.0),
              endTime: Date().addingTimeInterval(5000.0),
@@ -409,7 +407,6 @@ extension User {
     public static var allUsers = allFriends()
     
     // sample test user with existing plans and existing friends
-    static var sampleUser = User(userName: "Hi", password: "Hi");
     
     
     public func setUsername(username:String) {

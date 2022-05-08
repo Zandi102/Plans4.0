@@ -29,7 +29,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
         let address: String
     }
     
-    let activeUser : User = User.sampleUser // represents the active user logged in, who uses the view controller
+    let activeUser : User = User.currentUser // represents the active user logged in, who uses the view controller
     var add_success : Bool = false          // represents if the plan has been added to the list
     // IBOUTLETS
     @IBOutlet weak var planName: UITextField!
@@ -40,6 +40,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     @IBOutlet weak var planNotes: UITextView!
     @IBOutlet weak var createPlanButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    
     private var isAddressInvalid = false
     private var isTimeInvalid = false
     private var isDateInvalid = false
@@ -136,13 +137,13 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                     }
                     let planName1 = planToValidate.title
                     let datePicker1 = planToValidate.day
-                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + 60)
-                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + 60)
+                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + 70)
+                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + 70)
                     let addressName = planToValidate.address!
                     let planNotes1 = planToValidate.notes
                     let db = DBManager();
                     let url : URL = URL(string: "http://abdasalaam.com/Functions/createPlan.php")!
-                    let username = User.sampleUser.userName
+                    let username = User.currentUser.userName
                         let parameters: [String: Any] = [
                             "plan_name":planName1,
                             "startTime":startPicker1,
@@ -153,7 +154,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                             "username": username
                         ]
                     let message = db.postRequest(url, parameters)
-                    print(message);
+                    //print(message)
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true
                     //planToValidate.owner = self.activeUser
@@ -245,7 +246,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             let dayDifference : TimeInterval = day.timeIntervalSince(Date())
             let startTime : Date = self.startTimePicker.date.addingTimeInterval(dayDifference)
             let endTime   : Date = self.endTimePicker.date.addingTimeInterval(dayDifference)
-            let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.sampleUser.userName)
+            let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.currentUser.userName)
             
             validate(planToValidate: planToAdd)
             

@@ -69,7 +69,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             let message = db.postRequest(url, parameters)
             if (message == "login successful") {
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
-                User.sampleUser = User.createCurrentUser(usernameLogin.text!)
+                User.currentUser = User.createCurrentUser(usernameLogin.text!)
                 usernameLogin.text = "";
                 passwordLogin.text = "";
                 

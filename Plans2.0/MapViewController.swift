@@ -18,7 +18,7 @@ import UIKit
 
 import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
-    let activeUser : User = User.sampleUser;
+    let activeUser : User = User.currentUser;
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var eventListButton: UIButton!
@@ -28,7 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private var locationAccess = false;
 
     @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {
-        User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
+        User.currentUser = User.createCurrentUser(User.currentUser.userName);
         initialSet = false
         mapView.delegate = self
         addMapOverlay(planList: activeUser.plans)
@@ -41,9 +41,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad();
         initialSet = false
-        User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
+        User.currentUser = User.createCurrentUser(User.currentUser.userName);
         determineCurrentLocation()
-        backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
+        //backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
         // refresh annotations if needed
         mapView.delegate = self
         
@@ -145,10 +145,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     // back tap action function
-    @objc func backTap() {
-
-        //set values for signup to null;
-
-    }
 
 }

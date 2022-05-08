@@ -56,10 +56,8 @@ class EventListViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    
-    
     func filterContentForSearchText(searchText: String) {
-        filteredPlans = User.sampleUser.plans.filter({(plan: Plan) -> Bool in
+        filteredPlans = User.currentUser.plans.filter({(plan: Plan) -> Bool in
             return plan.address.lowercased().contains(searchText.lowercased()) || plan.owner.fullName.lowercased().contains(searchText.lowercased()) || plan.owner.userName.lowercased().contains(searchText.lowercased()) || plan.title.lowercased().contains(searchText.lowercased()) || plan.date.lowercased().contains(searchText.lowercased());
         });
         tableView.reloadData();
@@ -83,20 +81,21 @@ class EventListViewController: UIViewController {
     func getPlan(at rowIndex: Int) -> Plan? {
         return filteredPlans[rowIndex]
     }
+    
 }
 extension EventListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(isFiltering()) {
             Plan.planDetailView = filteredPlans[indexPath.row];
         }
-        Plan.planDetailView = User.sampleUser.plans[indexPath.row];
+        Plan.planDetailView = User.currentUser.plans[indexPath.row];
     }
 }
 
 extension EventListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {return filteredPlans.count};
-        return User.sampleUser.plans.count;
+        return User.currentUser.plans.count;
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
@@ -106,7 +105,7 @@ extension EventListViewController : UITableViewDataSource {
         }
         else {
             print(indexPath.row)
-            currentPlan = User.sampleUser.plans[indexPath.row];
+            currentPlan = User.currentUser.plans[indexPath.row];
         }
         var cellConfig = cell.defaultContentConfiguration();
         cellConfig.text = currentPlan.title + " by " + currentPlan.ownerUsername;
@@ -118,7 +117,7 @@ extension EventListViewController : UITableViewDataSource {
         
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if User.sampleUser.plans[indexPath.row].ownerUsername == User.sampleUser.userName {
+        if User.currentUser.plans[indexPath.row].ownerUsername == User.currentUser.userName {
             let share = UITableViewRowAction(style: .normal, title: "Mark as Done") { action, index in
                 if self.isFiltering() == true {
                     print("Is Filtering");
@@ -127,11 +126,11 @@ extension EventListViewController : UITableViewDataSource {
                     let db = DBManager();
                     let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
                     let parameters: [String: Any] = [
-                        "plan_id": User.sampleUser.plans[indexPath.row].id,
+                        "plan_id": User.currentUser.plans[indexPath.row].id,
                     ]
                     let message = db.postRequest(url, parameters)
                     print(message);
-                    User.sampleUser.plans.remove(at: indexPath.row)
+                    User.currentUser.plans.remove(at: indexPath.row)
                     tableView.reloadData()
                 }
             }
