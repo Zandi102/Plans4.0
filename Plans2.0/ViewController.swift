@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
    // }()
     
     @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var userPasswordField: UITextField!
@@ -39,15 +40,14 @@ class ViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad();
         saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
+        profileButton?.addTarget(self, action: #selector(changeProfile), for: .touchUpInside)
         saveChangesButton!.frame = CGRect.init(x: 0, y: view.frame.size.height - 250, width: self.view.bounds.width, height: 100)
         self.username.text = User.currentUser.userName
         self.username.adjustsFontSizeToFitWidth = true
         userTextField.text = User.currentUser.userName
-        userPasswordField.text = User.currentUser.password
         userEmailField.text = User.currentUser.fullName;
         userDescriptionField.text = User.currentUser.description;
         userTextField.delegate = self
-        userPasswordField.delegate = self
         userEmailField.delegate = self
        // userTextField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
         //userPasswordField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
@@ -65,6 +65,9 @@ class ViewController: UIViewController, UITextFieldDelegate{
         self.view.endEditing(true)
     }
     
+    @objc func changeProfile() {
+        presentPhotoActionSheet()
+    }
     @objc func buttonTap() {
         User.currentUser.fullName = self.userEmailField.text!
         User.currentUser.description = self.userDescriptionField.text!
@@ -85,5 +88,48 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
 
+}
+extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func presentPhotoActionSheet() {
+        let actionSheet = UIAlertController(title: "Profile Picture", message: "How would you like to select your picture?", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: {[weak self] _ in
+            self?.presentCamera()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Choose Photo", style: .default, handler: {[weak self] _ in
+            self?.presentCameraRoll()
+        }))
+        present(actionSheet, animated: true)
+    }
+    
+    func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func presentCameraRoll() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        self.profilePicture.image = image
+        self.profilePicture.layer.masksToBounds = true
+        
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
