@@ -20,7 +20,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginButton: UIButton!
     
-    
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
