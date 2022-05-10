@@ -135,10 +135,11 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                         self.checkAddressInput.removeFromSuperview()
                         self.failPlan.removeFromSuperview()
                     }
+                    let dayDifference : TimeInterval = planToValidate.day.timeIntervalSince(Date())
                     let planName1 = planToValidate.title
                     let datePicker1 = planToValidate.day
-                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + 70)
-                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + 70)
+                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
+                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
                     let addressName = planToValidate.address!
                     let planNotes1 = planToValidate.notes
                     let db = DBManager();
