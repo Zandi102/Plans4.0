@@ -99,6 +99,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
             "image":strBase64
         ]
         let message = db.postRequest(url, parameters)
+        User.currentUser = User.createCurrentUser(User.currentUser.userName)
     }
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {
         //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
