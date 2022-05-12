@@ -161,7 +161,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                     //planToValidate.owner = self.activeUser
                     //self.activeUser.plans.append(planToValidate)
                     self.add_success = true
-                    
                     // print success response to the user
                     self.view.addSubview(self.successPlan)
                     self.view.addSubview(self.backToMap)

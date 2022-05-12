@@ -164,6 +164,7 @@ class User : Identifiable {
         self.description = ""
     }
     
+    
     private init(fullName : String, userName : String, email : String, phone : Int, age : Int, password : String, friends : [User]) {
         self.fullName = fullName
         self.userName = userName
@@ -249,6 +250,20 @@ class User : Identifiable {
             print("No friends Found")
         }
     }
+    
+    public static func hashPassword(toHash: String) -> Int {
+        return toHash.hashValue ^ 2 / 2
+    }
+    public static func stringToInt(string : String) -> Int {
+        let a: Int = Int(string)!
+        return a
+    }
+    public static func intToString(a : Int) -> String {
+        let string : String = String(a)
+        return string
+    }
+    
+    
     
     private func setPlans(username : String) {
         let db = DBManager();

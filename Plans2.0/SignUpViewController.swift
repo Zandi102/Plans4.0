@@ -65,8 +65,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/register.php")!
             let parameters: [String: Any] = [
-                "username":usernameField.text!,
-                "password":passwordField.text!,
+                "username": usernameField.text!,
+                "password": passwordField.text!,
             ]
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {

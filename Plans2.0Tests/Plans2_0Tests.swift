@@ -119,5 +119,16 @@ class Plans2_0Tests: XCTestCase {
             XCTAssertFalse(true)
         }
     }
+    
+    func testHash() {
+        let x = User.hashPassword(toHash: "Ozzie123")
+        let y = User.hashPassword(toHash: "Ozzie123")
+        let w = User.intToString(a: x)
+        let z = User.intToString(a: y)
+        let c = User.stringToInt(string: w)
+        let d = User.stringToInt(string: z)
+        XCTAssertEqual(c, d)
+        
+    }
 
 }
