@@ -14,6 +14,7 @@ class User : Identifiable {
         let password: String
         let name: String
         let description: String
+        let image: String
     }
     
     private struct FriendStruct: Decodable {
@@ -63,6 +64,9 @@ class User : Identifiable {
     public var invites : [User] = []
     //public var isAdded : Int = 0
     public static var friendToShow : User = User();
+    public var image : String = ""
+    
+    
     // private var timeZone : TimeZone = TimeZone.autoupdatingCurrent
     // private var calender : Calendar = Calendar.autoupdatingCurrent
     init() {
@@ -72,6 +76,7 @@ class User : Identifiable {
         self.age = 0
         self.password = ""
         self.description = ""
+        self.image = ""
     }
     
     init?(_ username : String) {
@@ -90,6 +95,7 @@ class User : Identifiable {
             self.age = 0
             self.password = resp.password
             self.description = resp.description
+            self.image = resp.image
         }
         else {
             return nil
@@ -116,6 +122,7 @@ class User : Identifiable {
             user.setFriends(username: username)
             user.setInvites(username: username)
             user.setPlans(username: username)
+            user.image = resp.image
         }
         return user;
     }
