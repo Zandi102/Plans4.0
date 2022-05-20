@@ -44,7 +44,7 @@ class DBManager {
             
             let responseString = String(data: data, encoding: .utf8)
                 
-            print("responseString = \(responseString!)")
+            //print("responseString = \(responseString!)")
             if let dataK = responseString {
                 let jsonData = dataK.data(using: .utf8)!
                 let resp: PostStruct = try! JSONDecoder().decode(PostStruct.self, from: jsonData)
@@ -86,7 +86,7 @@ class DBManager {
             
             
             message = responseString!
-            print("responseString = \(responseString!)")
+            //print("responseString = \(responseString!)")
         }
         task.resume()
         sem.wait()

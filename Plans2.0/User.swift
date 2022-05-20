@@ -63,10 +63,8 @@ class User : Identifiable {
     public var friends : [User] = []
     public var invites : [User] = []
     //public var isAdded : Int = 0
-    public static var friendToShow : User = User();
+    public static var friendToShow : User = User()
     public var image : String = ""
-    
-    
     // private var timeZone : TimeZone = TimeZone.autoupdatingCurrent
     // private var calender : Calendar = Calendar.autoupdatingCurrent
     init() {

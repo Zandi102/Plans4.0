@@ -230,6 +230,16 @@ class Plan : Equatable, Identifiable {
         formatter.dateFormat = "h:mm a"
         return formatter.string(from: date)
     }
+    
+    static func timeInsertText(_ date: Date) -> String {
+        let formatter : DateFormatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeStyle = .medium
+        //formatter.amSymbol = "AM"
+        //formatter.pmSymbol = "PM"
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter.string(from: date)
+    }
 
     static func textToTime(_ string: String) -> Date {
         let dateFormatter : DateFormatter = DateFormatter()

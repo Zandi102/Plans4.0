@@ -58,7 +58,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
                                               startingAt: 0)
             }
             let imageData = Data(base64Encoded: stringImg)
-            print(imageData)
+            //print(imageData)
             profilePicture.image = UIImage(data: imageData!)!
         }
         else {

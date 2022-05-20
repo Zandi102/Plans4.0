@@ -122,6 +122,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     private func validate(planToValidate : Plan) {
         // the return value could either be a plan or nil value
         // validate the start time and end time of the plan, to make sure that start time is > current date, and end time is > starttime
+        print("Look here for initial!" + planToValidate.startTime.description)
         if (planToValidate.day.compare(Date()).rawValue > 0 && planToValidate.startTime.compare(Date().addingTimeInterval(-120)).rawValue > 0) || (Plan.dayText(planToValidate.day) == Plan.dayText(Date()) && planToValidate.startTime.compare(Date().addingTimeInterval(-120)).rawValue > 0) {
             // validate the address string input of the plan
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
@@ -135,11 +136,11 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                         self.checkAddressInput.removeFromSuperview()
                         self.failPlan.removeFromSuperview()
                     }
-                    let dayDifference : TimeInterval = planToValidate.day.timeIntervalSince(Date())
+                    print(planToValidate.startTime.description)
                     let planName1 = planToValidate.title
                     let datePicker1 = planToValidate.day
-                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
-                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
+                    let startPicker1 = Plan.timeInsertText(planToValidate.startTime)
+                    let endPicker1 = Plan.timeInsertText(planToValidate.endTime)
                     let addressName = planToValidate.address!
                     let planNotes1 = planToValidate.notes
                     let db = DBManager();
@@ -243,9 +244,9 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     @objc func createPlan() {
         if(add_success == false) {
             let day : Date = self.datePicker.date
-            let dayDifference : TimeInterval = day.timeIntervalSince(Date())
-            let startTime : Date = self.startTimePicker.date.addingTimeInterval(dayDifference)
-            let endTime   : Date = self.endTimePicker.date.addingTimeInterval(dayDifference)
+            //let dayDifference : TimeInterval = day.timeIntervalSince(Date())
+            let startTime : Date = self.startTimePicker.date
+            let endTime   : Date = self.endTimePicker.date
             let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.currentUser.userName)
             
             validate(planToValidate: planToAdd)
