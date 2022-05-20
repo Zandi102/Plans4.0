@@ -278,16 +278,15 @@ class User : Identifiable {
                 //print(jsonData3)
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData)
                 print(resp.plan_name)
-                if(Plan.textToDate(resp.date).compare(Date()).rawValue < 0 && Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())) {
+                if(Plan.textToDate(resp.date).compare(Date().addingTimeInterval(-86400)).rawValue < 0) {
                     //print(resp.plan_name + " is" + " completed");
-//                    //delete plan from database
-//                    let db = DBManager();
-//                    let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
-//                    let parameters: [String: Any] = [
-//                        "plan_id": resp.plan_id,
-//                    ]
-//                    let message = db.postRequest(url, parameters)
-//                    print(message);
+                    let db = DBManager();
+                    let url = URL(string: "http://abdasalaam.com/Functions/deletePlan.php")!
+                    let parameters: [String: Any] = [
+                        "plan_id": resp.plan_id,
+                    ]
+                    let message = db.postRequest(url, parameters)
+                    print(message);
                 }
                 else {
                     plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
