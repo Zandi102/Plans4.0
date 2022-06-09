@@ -64,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             let url = URL(string: "http://abdasalaam.com/Functions/login.php")!
             let parameters: [String: Any] = [
                 "username": usernameLogin.text!,
-                "password": passwordLogin.text!,
+                "password": User.hashPassword(toHash: passwordLogin.text!)
             ]
             let message = db.postRequest(url, parameters)
             if (message == "login successful") {
@@ -85,6 +85,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
                 label.textAlignment = .center
                 label.text = "Please make sure the credentials are correct."
+                let count = 0
+                while count < 10000 {
+                    
+                }
             }
             else {
                 view.addSubview(label);

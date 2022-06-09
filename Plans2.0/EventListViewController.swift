@@ -142,8 +142,6 @@ extension EventListViewController : UITableViewDataSource {
         }
     }
 }
-
-
 extension EventListViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         filterContentForSearchText(searchText: searchBar.text!);

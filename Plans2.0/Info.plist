@@ -79,5 +79,10 @@
 	<string>Allow access to Camera</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow access to Camera Roll</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Raleway-Italic-VariableFont_wght.ttf</string>
+		<string>Raleway-VariableFont_wght.ttf</string>
+	</array>
 </dict>
 </plist>

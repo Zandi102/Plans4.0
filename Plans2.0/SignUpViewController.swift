@@ -51,7 +51,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @objc func register () {
         let passLength = passwordField.text!
         let userLength = usernameField.text!
-        if(passLength.count < 7 || userLength.count < 2) {
+        if(passLength.count < 8 || userLength.count < 2) {
             view.addSubview(label)
             label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
             label.textAlignment = .center
@@ -66,7 +66,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let url = URL(string: "http://abdasalaam.com/Functions/register.php")!
             let parameters: [String: Any] = [
                 "username": usernameField.text!,
-                "password": passwordField.text!,
+                "password": User.hashPassword(toHash: passwordField.text!)
             ]
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {

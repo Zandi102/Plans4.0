@@ -251,9 +251,23 @@ class User : Identifiable {
         }
     }
     
-    public static func hashPassword(toHash: String) -> Int {
-        return toHash.hashValue ^ 2 / 2
+    public static func hashPassword(toHash: String) -> String {
+        let randomString : String = "qpalzmwoskxneidjcbvfhrytguGHJDKSLAPQOEIWRYTUZMBCNXV1729380456"
+        var inc = 0;
+        var appendString : String = "";
+        for letter in toHash {
+            inc = Int(letter.asciiValue!) % randomString.count
+            appendString = appendString + String(charAt(at: inc,string: randomString));
+        }
+        print(appendString)
+        return appendString
     }
+    
+    public static func charAt(at: Int, string: String) -> Character {
+        let charIndex = string.index(string.startIndex, offsetBy: at)
+        return string[charIndex]
+    }
+    
     public static func stringToInt(string : String) -> Int {
         let a: Int = Int(string)!
         return a
@@ -262,7 +276,20 @@ class User : Identifiable {
         let string : String = String(a)
         return string
     }
-    
+    /*hashing algorithm
+     array of random strings of various sizes
+     initiate increment index at 0
+     the fist letter of the input password, you start at the index of integer value of that letter in the array and replace the letter by the string in the array at that index
+     incrememnt the inc index by the value of the integer, so now next letter will be the index of the integer value of that letter plus the increment
+     and continue. That way, if there is a string aabc as password, it wont use the same string value for each letter a and people will not be able to decipher the code
+     
+     undoing the hashing algorithm
+     the first string will be in the right place according to its index, so we can convert the first string to the letter, and add to the increment the integer value of the converted letter
+     Then, the next string we find, we take its index value in the array and subtract it by the increment, and convert that integer value to the character value
+     etc.
+     
+     
+     */
     
     
     private func setPlans(username : String) {
