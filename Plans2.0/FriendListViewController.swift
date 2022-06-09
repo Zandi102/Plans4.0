@@ -18,7 +18,6 @@ class FriendListViewController: UIViewController {
         let password: String
         let name: String
         let description: String
-        let image : String
     }
     
     @IBOutlet weak var friendTable: UITableView!

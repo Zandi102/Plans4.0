@@ -338,19 +338,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G7f-2v-G3k">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G7f-2v-G3k">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.01076690573" green="0.05219753832" blue="0.1848035455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="R9e-jH-yGZ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="G7f-2v-G3k" firstAttribute="leading" secondItem="R9e-jH-yGZ" secondAttribute="leading" id="8bo-gc-HKs"/>
-                            <constraint firstItem="G7f-2v-G3k" firstAttribute="bottom" secondItem="R9e-jH-yGZ" secondAttribute="bottom" id="SbP-zA-8he"/>
-                            <constraint firstItem="G7f-2v-G3k" firstAttribute="top" secondItem="adT-xa-aWd" secondAttribute="top" id="avk-ts-sDe"/>
-                            <constraint firstItem="G7f-2v-G3k" firstAttribute="trailing" secondItem="R9e-jH-yGZ" secondAttribute="trailing" id="uk8-iJ-t4I"/>
-                        </constraints>
                     </view>
                     <toolbarItems>
                         <barButtonItem title="Add Plan" image="plus" catalog="system" width="100" id="Rfv-Nj-iMd">
@@ -1020,10 +1015,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="VcO-8Z-TaS"/>
-        <segue reference="2bU-EG-kJa"/>
-        <segue reference="EhU-S8-eJQ"/>
-        <segue reference="fTt-f8-CqH"/>
+        <segue reference="Jje-wv-eE3"/>
+        <segue reference="C1Q-Um-tAr"/>
+        <segue reference="JVA-Zr-rlI"/>
+        <segue reference="CRd-Ae-7HF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemOrangeColor"/>
     <resources>
