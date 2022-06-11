@@ -18,6 +18,7 @@ class FriendListViewController: UIViewController {
         let password: String
         let name: String
         let description: String
+        let image: String
     }
     
     @IBOutlet weak var friendTable: UITableView!
@@ -59,6 +60,7 @@ extension FriendListViewController : UITableViewDelegate {
             User.friendToShow.fullName = resp.name
             User.friendToShow.userName = resp.username
             User.friendToShow.description = resp.description
+            User.friendToShow.image = resp.image
         }
     }
 }
