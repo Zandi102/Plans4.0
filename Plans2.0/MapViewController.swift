@@ -143,7 +143,4 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             locationManager.startUpdatingLocation()
         }
     }
-
-    // back tap action function
-
 }

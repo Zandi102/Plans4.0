@@ -38,13 +38,13 @@ class DBManager {
             }
             guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
                 print("statusCode should be 2xx, but is \(response.statusCode)")
-                print("response = \(response)")
+                //print("response = \(response)")
                 return
             }
             
             let responseString = String(data: data, encoding: .utf8)
                 
-            print("responseString = \(responseString!)")
+            //print("responseString = \(responseString!)")
             if let dataK = responseString {
                 let jsonData = dataK.data(using: .utf8)!
                 let resp: PostStruct = try! JSONDecoder().decode(PostStruct.self, from: jsonData)
@@ -53,7 +53,7 @@ class DBManager {
         }
         task.resume()
         sem.wait()
-        print(message)
+        //print(message)
         return message
     }
     
@@ -86,11 +86,11 @@ class DBManager {
             
             
             message = responseString!
-            print("responseString = \(responseString!)")
+            //print("responseString = \(responseString!)")
         }
         task.resume()
         sem.wait()
-        print(message)
+        //print(message)
         return stringArray
 }
 

@@ -83,11 +83,11 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
         label.text = "Invalid Time/Date. Make sure it hasn't yet happened!"
         return label
     }();
+    
     // VIEWDIDLOAD OVERRIDE
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
-        //datePicker.setValue(UIColor.systemOrange, forKeyPath: "backgroundColor")
         startTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
         endTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
         datePicker.overrideUserInterfaceStyle = .light
@@ -96,8 +96,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
         planName.delegate = self
         planAddress.delegate = self
         planNotes.delegate = self
-        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        //view.addGestureRecognizer(tap)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -155,11 +153,8 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                             "username": username
                         ]
                     let message = db.postRequest(url, parameters)
-                    //print(message)
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true
-                    //planToValidate.owner = self.activeUser
-                    //self.activeUser.plans.append(planToValidate)
                     self.add_success = true
                     // print success response to the user
                     self.view.addSubview(self.successPlan)
@@ -192,7 +187,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                     self.failPlan.textAlignment = .center;
                     self.checkAddressInput.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 75, width: self.view.bounds.width, height: 50)
                     self.checkAddressInput.textAlignment = .center
-                    // print error details to console
                     print("error: invalid coordinates") // throw error
                     print("plan address: \(planToValidate.address ?? "niladdress")")
                     print("plan coordinates: \(planToValidate._coord?.latitude.description ?? "invalidlat"), \(planToValidate._coord?.longitude.description ?? "invalidlong")")
@@ -208,12 +202,10 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                 self.checkAddressInput.removeFromSuperview()
                 self.isAddressInvalid = false;
             }
-            //self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.frame.size.width - 50, height: 50)
             self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50)
             self.failPlan.textAlignment = .center
             self.checkTimeInput.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 75, width: self.view.bounds.width, height: 50)
             self.checkTimeInput.textAlignment = .center
-            // print error details to console
             print("error: invalid start time and/or end time") // throw error
             print("plan day: \(Plan.dayText(planToValidate.startTime))")
             print("time: \(Plan.timeText(planToValidate.startTime)) - \(Plan.timeText(planToValidate.endTime))")
@@ -249,19 +241,6 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             let planToAdd = Plan(title: planName.text!, day: day, startTime: startTime, endTime: endTime, address: planAddress.text!, notes: planNotes.text!, ownerUsername: User.currentUser.userName)
             
             validate(planToValidate: planToAdd)
-            
-
-                /*let message2 = db.getRequest(url2!)
-                if message2.count > 0 {
-                let jsonData = message2[0].data(using: .utf8)!
-                let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData);
-                print(resp.plan_name)
-                    User.sampleUser.plans.append(Plan(title: resp.plan_name, day:Plan.textToDate(resp.date), startTime: Plan.textToTime(resp.startTime), endTime:Plan.textToTime(resp.endTime), address: resp.address, notes: resp.description, ownerUsername: resp.username, plan_id: resp.plan_id))
-                print(message2[0]);
-                
- 
-                }*/
-            
         }
     }
 }

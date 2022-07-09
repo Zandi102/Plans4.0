@@ -259,7 +259,7 @@ class User : Identifiable {
             inc = Int(letter.asciiValue!) % randomString.count
             appendString = appendString + String(charAt(at: inc,string: randomString));
         }
-        print(appendString)
+        //print(appendString)
         return appendString
     }
     
@@ -306,7 +306,7 @@ class User : Identifiable {
                 let jsonData = message.data(using: .utf8)!
                 //print(jsonData3)
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData)
-                print(resp.plan_name)
+                //print(resp.plan_name)
                 if(Plan.textToDate(resp.date).compare(Date()).rawValue < 0 && Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())) {
                     //print(resp.plan_name + " is" + " completed");
 //                    //delete plan from database
@@ -330,7 +330,7 @@ class User : Identifiable {
                 let jsonData2 = message2.data(using: .utf8)!
                 //print(jsonData3)
                 let resp: PlanStruct = try! JSONDecoder().decode(PlanStruct.self, from: jsonData2)
-                print(resp.plan_name)
+                //print(resp.plan_name)
                 if(Plan.textToDate(resp.date).compare(Date()).rawValue < 0 && Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())){
                     //print(Plan.textToDate(resp.date))
                     //&& Plan.dayText(Plan.textToDate(resp.date)) != Plan.dayText(Date())

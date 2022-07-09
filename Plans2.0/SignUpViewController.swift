@@ -32,8 +32,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside)
         usernameField.delegate = self
         passwordField.delegate = self
-        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        //view.addGestureRecognizer(tap)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -58,8 +56,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             label.text = "Invalid user credentials."
             usernameField.text = ""
             passwordField.text = ""
-            //emailField.text = "";
-            //phoneNumberField.text = "";
         }
         else {
             let db = DBManager();
@@ -71,8 +67,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
-                //emailField.text = ""
-                //phoneNumberField.text = ""
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
                 //publicUsername will be used in other view controllers to find the info related to the user logged in
                 User.currentUser = User.createCurrentUser(usernameField.text!)

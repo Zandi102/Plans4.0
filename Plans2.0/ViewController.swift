@@ -20,7 +20,6 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var userPasswordField: UITextField!
     @IBOutlet weak var userEmailField: UITextField!
     @IBOutlet weak var userDescriptionField: UITextView!
@@ -43,11 +42,11 @@ class ViewController: UIViewController, UITextFieldDelegate{
         profileButton?.addTarget(self, action: #selector(changeProfile), for: .touchUpInside)
         saveChangesButton!.frame = CGRect.init(x: 0, y: view.frame.size.height - 250, width: self.view.bounds.width, height: 100)
         self.username.text = User.currentUser.userName
+        
         self.username.adjustsFontSizeToFitWidth = true
-        userTextField.text = User.currentUser.userName
-        userEmailField.text = User.currentUser.fullName;
-        userDescriptionField.text = User.currentUser.description;
-        userTextField.delegate = self
+        
+        userEmailField.text = User.currentUser.fullName
+        userDescriptionField.text = User.currentUser.description
         userEmailField.delegate = self
         if User.currentUser.image.count > 0 {
             var stringImg = User.currentUser.image
@@ -58,19 +57,17 @@ class ViewController: UIViewController, UITextFieldDelegate{
                                               startingAt: 0)
             }
             let imageData = Data(base64Encoded: stringImg)
-            print(imageData)
             profilePicture.image = UIImage(data: imageData!)!
         }
         else {
             profilePicture.image = UIImage(named: "ProfilePicture")
         }
-        //userTextField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
-        //userPasswordField.frame = CGRect.init(x: 0, y: view.frame.size.height - 300, width: self.view.bounds.width, height: 100);
-        //saveChangesButton!.frame
+        profilePicture.layer.masksToBounds = true
+        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
+        profilePicture.clipsToBounds = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        userTextField.resignFirstResponder()
         userPasswordField.resignFirstResponder()
         userEmailField.resignFirstResponder()
         userDescriptionField.resignFirstResponder()
@@ -101,10 +98,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
         let message = db.postRequest(url, parameters)
         User.currentUser = User.createCurrentUser(User.currentUser.userName)
     }
-    @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {
-        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName)
-    }
-    
+    @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
 
 }
 extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {

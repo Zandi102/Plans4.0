@@ -72,15 +72,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                 User.currentUser = User.createCurrentUser(usernameLogin.text!)
                 usernameLogin.text = "";
                 passwordLogin.text = "";
-                
-                //emailLogin.text = "";
-                //phoneNumberLogin.text = "";
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
                 //publicUsername will be used in other view controllers to find the info related to the user logged in
                 switchScreen();
             }
             else if (message == "login unsuccessful") {
-                print(message)
                 view.addSubview(label);
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
                 label.textAlignment = .center
@@ -99,10 +95,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        //let destVC = segue.destination as! SignUpViewController;
-    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){}
     
     
     
