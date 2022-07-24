@@ -63,7 +63,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             userLocationPin.title = "YOU"
             userLocationPin.subtitle = "This is you!"
             userLocationPin.coordinate = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
-            let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+            let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
             mapView.setRegion(initialRegion, animated: true)
             
