@@ -20,20 +20,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
     
-    private var loggedIn = false;
+    private var loggedIn = false
     
     private let label: UILabel = {
-        let label = UILabel();
-        label.textColor = .systemRed;
-        label.text = "Invalid Credentials";
-        return label;
+        let label = UILabel()
+        label.textColor = .systemRed
+        label.text = "Invalid Credentials"
+        return label
     }();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton?.addTarget(self, action: #selector(login), for: .touchUpInside)
-        usernameLogin.delegate = self;
+        usernameLogin.delegate = self
         passwordLogin.delegate = self
+        loginButton.layer.cornerRadius = loginButton.bounds.size.height / 2.0
+        forgotPasswordButton.layer.cornerRadius = forgotPasswordButton.bounds.size.height / 2.0
+
         //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         //view.addGestureRecognizer(tap)
     }
@@ -48,11 +51,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     }
     
     @objc func login (){
-        let passLength = passwordLogin.text!;
-        let userLength = passwordLogin.text!;
+        let passLength = passwordLogin.text!
+        let userLength = passwordLogin.text!
         if(passLength.count < 7 || userLength.count < 2) {
-            view.addSubview(label);
-            label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+            view.addSubview(label)
+            label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
             label.textAlignment = .center
             label.text = "Invalid user credentials."
             usernameLogin.text = "";
@@ -68,7 +71,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             ]
             let message = db.postRequest(url, parameters)
             if (message == "login successful") {
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 User.currentUser = User.createCurrentUser(usernameLogin.text!)
                 usernameLogin.text = "";
                 passwordLogin.text = "";
@@ -78,7 +81,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             }
             else if (message == "login unsuccessful") {
                 view.addSubview(label);
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Please make sure the credentials are correct."
                 let count = 0
@@ -88,7 +91,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             }
             else {
                 view.addSubview(label);
-                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100);
+                label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Invalid request"
             }

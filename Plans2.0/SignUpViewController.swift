@@ -32,6 +32,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside)
         usernameField.delegate = self
         passwordField.delegate = self
+        registerButton.layer.cornerRadius = registerButton.bounds.size.height / 2.0
+        loginButton.layer.cornerRadius = loginButton.bounds.size.height / 2.0
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -42,7 +42,7 @@ class EventListViewController: UIViewController {
         tableView.delegate = self;
         tableView.dataSource = self;
         searchBar.delegate = self;
-        searchBar.searchTextField.textColor = .orange
+        searchBar.searchTextField.textColor = .white
         searchBar.delegate = self;
         //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         //view.addGestureRecognizer(tap)
@@ -65,16 +65,12 @@ class EventListViewController: UIViewController {
     
     func isSearchBarEmpty() -> Bool {
         if(searchBar.text! != "") {
-            //print("search bar full");
             return false;
         }
-        //print("search bar empty");
         return true;
-        //return searchBar.text?.isEmpty ?? true;
     }
     
     func isFiltering() -> Bool {
-        //searchField.reloadData();
         return !isSearchBarEmpty();
     }
     
@@ -109,9 +105,9 @@ extension EventListViewController : UITableViewDataSource {
         }
         var cellConfig = cell.defaultContentConfiguration();
         cellConfig.text = currentPlan.title + " by " + currentPlan.ownerUsername;
-        cellConfig.textProperties.color = .systemOrange;
+        cellConfig.textProperties.color = .white;
         cellConfig.secondaryText = "Date: " + Plan.dayText(currentPlan.day) + ", " + "Time: " + Plan.timeText(currentPlan.startTime) + ", " + "Address: " + currentPlan.address;
-        cellConfig.secondaryTextProperties.color = .systemOrange;
+        cellConfig.secondaryTextProperties.color = .white;
         cell.contentConfiguration = cellConfig;
         return cell;
         

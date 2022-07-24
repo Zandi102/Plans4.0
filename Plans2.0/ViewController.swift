@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var userEmailField: UITextField!
     @IBOutlet weak var userDescriptionField: UITextView!
     
+    
     @IBOutlet weak var saveChangesButton: UIButton? = {
         let saveChangesButton = UIButton()
         saveChangesButton.backgroundColor = .white
@@ -40,11 +41,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
         super.viewDidLoad();
         saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
         profileButton?.addTarget(self, action: #selector(changeProfile), for: .touchUpInside)
-        saveChangesButton!.frame = CGRect.init(x: 0, y: view.frame.size.height - 250, width: self.view.bounds.width, height: 100)
         self.username.text = User.currentUser.userName
-        
         self.username.adjustsFontSizeToFitWidth = true
-        
         userEmailField.text = User.currentUser.fullName
         userDescriptionField.text = User.currentUser.description
         userEmailField.delegate = self
@@ -65,6 +63,8 @@ class ViewController: UIViewController, UITextFieldDelegate{
         profilePicture.layer.masksToBounds = true
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
+        saveChangesButton!.layer.cornerRadius = saveChangesButton!.bounds.size.height / 2.0
+
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

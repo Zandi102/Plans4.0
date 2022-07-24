@@ -32,17 +32,14 @@ class SearchViewController: UIViewController {
         label.text = "Cannot Invite User Twice"
         return label;
     }();
-    //var hasAdded = false;
+    
     override func viewDidLoad() {
-        //User.sampleUser = User.createCurrentUser(User.sampleUser.userName);
         super.viewDidLoad()
         searchField.delegate = self;
         searchField.dataSource = self;
         searchBar.delegate = self;
-        searchBar.searchTextField.textColor = .systemOrange
         searchBar.delegate = self;
-        //let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        //view.addGestureRecognizer(tap)
+        searchBar.searchTextField.textColor = .white
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -122,9 +119,9 @@ extension SearchViewController : UITableViewDataSource {
         else {
             cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName;
         }
-        cellConfig.textProperties.color = .systemOrange;
+        cellConfig.textProperties.color = .white;
         cellConfig.secondaryText = "Swipe to send invitation";
-        cellConfig.secondaryTextProperties.color = .systemOrange;
+        cellConfig.secondaryTextProperties.color = .white;
         cell.contentConfiguration = cellConfig;
         return cell;
     }

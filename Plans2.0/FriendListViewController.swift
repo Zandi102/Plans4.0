@@ -78,8 +78,8 @@ extension FriendListViewController : UITableViewDataSource {
             cellConfig.text = friends[indexPath.row].fullName;
             cellConfig.secondaryText = friends[indexPath.row].userName;
         }
-        cellConfig.textProperties.color = .systemOrange;
-        cellConfig.secondaryTextProperties.color = .systemOrange;
+        cellConfig.textProperties.color = .white;
+        cellConfig.secondaryTextProperties.color = .white;
         cell.contentConfiguration = cellConfig;
         return cell;
     }

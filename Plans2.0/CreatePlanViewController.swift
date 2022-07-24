@@ -87,10 +87,13 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     // VIEWDIDLOAD OVERRIDE
     override func viewDidLoad() {
         super.viewDidLoad()
-        datePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
-        startTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
-        endTimePicker.setValue(UIColor.systemOrange, forKeyPath: "textColor")
-        datePicker.overrideUserInterfaceStyle = .light
+        datePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        startTimePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        endTimePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        datePicker.overrideUserInterfaceStyle = .dark
+        startTimePicker.overrideUserInterfaceStyle = .dark
+        endTimePicker.overrideUserInterfaceStyle = .dark
+        createPlanButton.layer.cornerRadius = createPlanButton.bounds.size.height / 2.0
         createPlanButton?.addTarget(self, action: #selector(createPlan), for: .touchUpInside)
         cancelButton?.addTarget(self, action: #selector(cancel), for: .touchUpInside)
         planName.delegate = self
