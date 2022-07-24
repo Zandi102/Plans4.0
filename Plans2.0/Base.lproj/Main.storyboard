@@ -369,7 +369,7 @@
                         <barButtonItem title="Map" image="mappin" catalog="system" width="100" id="nKx-aH-7c7">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
-                        <barButtonItem title="Profile" image="person.fill" catalog="system" width="100" id="jw8-2O-7U7">
+                        <barButtonItem title="Profile" image="person.2.fill" catalog="system" width="100" id="jw8-2O-7U7">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="VcO-8Z-TaS"/>
@@ -450,7 +450,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem title="Item" width="100" id="Rwx-Cp-4Ii">
-                            <imageReference key="image" image="person.fill" catalog="system" symbolScale="large"/>
+                            <imageReference key="image" image="person.2.fill" catalog="system" symbolScale="large"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="Jje-wv-eE3"/>
@@ -1011,9 +1011,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Jje-wv-eE3"/>
-        <segue reference="C1Q-Um-tAr"/>
-        <segue reference="JVA-Zr-rlI"/>
-        <segue reference="CRd-Ae-7HF"/>
+        <segue reference="2bU-EG-kJa"/>
+        <segue reference="2ey-v6-S0Z"/>
+        <segue reference="ar2-60-V7U"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemOrangeColor"/>
     <resources>
