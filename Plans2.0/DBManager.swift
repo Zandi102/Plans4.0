@@ -82,7 +82,7 @@ class DBManager {
             }
             
             let responseString = String(data: data, encoding: .utf8)
-            stringArray = self.separateEntities(responseString!);
+            stringArray = self.separateEntities(responseString!)
             
             
             message = responseString!
@@ -100,7 +100,7 @@ class DBManager {
         var stringArr : [String] = []
         for char in string {
             if char == "{" {
-                open = 1;
+                open = 1
             }
             if open == 1 {
                 currentString.append(char)
@@ -108,11 +108,11 @@ class DBManager {
             if open == 0 {
                 if currentString != "" {
                     stringArr.append(currentString);
-                    currentString = "";
+                    currentString = ""
                 }
             }
             if char == "}" {
-                open = 0;
+                open = 0
             }
         }
         return stringArr

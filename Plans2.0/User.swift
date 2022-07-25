@@ -85,8 +85,6 @@ class User : Identifiable {
         let messages = db.getRequest(url)
         if messages.count > 0 {
             let userFields = messages[0]
-            //print("In User Class")
-            //print(userFields)
             let jsonData = userFields.data(using: .utf8)!
             let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData)
             self.fullName = resp.name
@@ -109,8 +107,6 @@ class User : Identifiable {
         let messages = db.getRequest(url)
         if messages.count > 0 {
             let userFields = messages[0]
-            //print("In User Class")
-            //print(userFields)
             let jsonData = userFields.data(using: .utf8)!
             let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData)
             user.fullName = resp.name

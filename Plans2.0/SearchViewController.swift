@@ -5,6 +5,7 @@
 //  Created by Alex Pallozzi on 4/11/22.
 
 import UIKit
+import Contacts
 
 class SearchViewController: UIViewController {
     
@@ -20,27 +21,54 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchField: UITableView!
     
-    var invitations = ["John Smith, click to accept", "Demarcus Cousins, click to accept"];
-    var filteredUsers = [User]();
+    var invitations = ["John Smith, click to accept", "Demarcus Cousins, click to accept"]
+    var filteredUsers = [User]()
     var usersInvited = User.allUsers
-    var searchBarIsFull = false;
+    var searchBarIsFull = false
     var doubleClick : String = ""
-    var numberOfInvites1 = 0;
+    var numberOfInvites1 = 0
     private let label: UILabel = {
-        let label = UILabel();
-        label.textColor = .systemRed;
+        let label = UILabel()
+        label.textColor = .systemRed
         label.text = "Cannot Invite User Twice"
-        return label;
+        return label
     }();
+    let store = CNContactStore()
+    var contactNames = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchField.delegate = self;
-        searchField.dataSource = self;
-        searchBar.delegate = self;
-        searchBar.delegate = self;
+        searchField.delegate = self
+        searchField.dataSource = self
+        searchBar.delegate = self
+        searchBar.delegate = self
         searchBar.searchTextField.textColor = .white
+        
+        let authorize = CNContactStore.authorizationStatus(for: .contacts)
+        if authorize == .notDetermined {
+            store.requestAccess(for: .contacts) { (chk, error) in
+                if error == nil {
+                    self.contactNames = self.getContactNames()
+                }
+            }
+        } else if authorize == .authorized {
+            self.contactNames = self.getContactNames()
+        }
     }
+    
+    func getContactNames() -> [String] {
+        let predicate = CNContact.predicateForContactsInContainer(withIdentifier: store.defaultContainerIdentifier())
+        let contact = try! store.unifiedContacts(matching: predicate, keysToFetch: [CNContactBirthdayKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor, CNContactPhoneNumbersKey as CNKeyDescriptor, CNContactDatesKey as CNKeyDescriptor])
+        let date = DateFormatter()
+        date.dateFormat = "MM/dd/yyyy"
+        var contactNames = [String]()
+        for con in contact {
+            contactNames.append(con.givenName + con.familyName)
+        }
+        print(contactNames.first)
+        return contactNames
+    }
+            
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchBar.resignFirstResponder()
@@ -52,18 +80,18 @@ class SearchViewController: UIViewController {
     
     func filterContentForSearchText(searchText: String) {
         filteredUsers = usersInvited.filter({(user: User) -> Bool in
-            return user.fullName.lowercased().contains(searchText.lowercased()) || user.userName.lowercased().contains(searchText.lowercased());
+            return user.fullName.lowercased().contains(searchText.lowercased()) || user.userName.lowercased().contains(searchText.lowercased())
         });
-        searchField.reloadData();
+        searchField.reloadData()
     }
     
     func isSearchBarEmpty() -> Bool {
         if(searchBar.text! != "") {
            // print("search bar full");
-            return false;
+            return false
         }
        // print("search bar empty");
-        return true;
+        return true
         //return searchBar.text?.isEmpty ?? true;
     }
     
@@ -71,11 +99,11 @@ class SearchViewController: UIViewController {
         if(!isSearchBarEmpty()) {
             label.removeFromSuperview()
         }
-        return !isSearchBarEmpty();
+        return !isSearchBarEmpty()
     }
     
     func numberOfInvites(username1: String, username2 : String) -> Int {
-        let db = DBManager();
+        let db = DBManager()
         let url = (URL(string: "http://abdasalaam.com/Functions/loadInvitationsBetweenFriends.php?username1=\(username1)&username2=\(username2)"))!
         let messages = db.getRequest(url)
         //message will contain the username and the name of friends that have isAdded = 1 for the corresponing user
@@ -101,35 +129,35 @@ extension SearchViewController : UITableViewDelegate {
 
 extension SearchViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {return filteredUsers.count};
-        return 0;
+        if isFiltering() {return filteredUsers.count}
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
-        let currentUser : User;
+        let currentUser : User
    
-        currentUser = filteredUsers[indexPath.row];
-        print("hi)");
+        currentUser = filteredUsers[indexPath.row]
+        print("hi)")
         
-        var cellConfig = cell.defaultContentConfiguration();
+        var cellConfig = cell.defaultContentConfiguration()
         if (filteredUsers[indexPath.row].fullName.count < 3) {
-            cellConfig.text = filteredUsers[indexPath.row].userName;
+            cellConfig.text = filteredUsers[indexPath.row].userName
         }
         else {
-            cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName;
+            cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName
         }
-        cellConfig.textProperties.color = .white;
-        cellConfig.secondaryText = "Swipe to send invitation";
-        cellConfig.secondaryTextProperties.color = .white;
-        cell.contentConfiguration = cellConfig;
-        return cell;
+        cellConfig.textProperties.color = .white
+        cellConfig.secondaryText = "Swipe to send invitation"
+        cellConfig.secondaryTextProperties.color = .white
+        cell.contentConfiguration = cellConfig
+        return cell
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var parameters: [String: Any] = [:]
         if (true == true) {
             let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
-                let db = DBManager();
+                let db = DBManager()
                 let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
                 if self.isFiltering() {
                     print(self.filteredUsers[indexPath.row])
@@ -163,16 +191,14 @@ extension SearchViewController : UITableViewDataSource {
 
 extension SearchViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        filterContentForSearchText(searchText: searchBar.text!);
+        filterContentForSearchText(searchText: searchBar.text!)
         
     }
 }
 
 extension SearchViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        //let searchBar = searchController.searchBar;
-        //let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex];
-        filterContentForSearchText(searchText: searchBar.text!);
-        searchField.reloadData();
+        filterContentForSearchText(searchText: searchBar.text!)
+        searchField.reloadData()
     }
 }

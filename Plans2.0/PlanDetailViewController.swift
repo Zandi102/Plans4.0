@@ -22,10 +22,10 @@ class PlanDetailViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        planTitle.text = Plan.planDetailView.title;
-        planTitle.adjustsFontSizeToFitWidth = true;
-        planAddress.text = Plan.planDetailView.address;
-        planAddress.adjustsFontSizeToFitWidth = true;
+        planTitle.text = Plan.planDetailView.title
+        planTitle.adjustsFontSizeToFitWidth = true
+        planAddress.text = Plan.planDetailView.address
+        planAddress.adjustsFontSizeToFitWidth = true
         
         planDate.text = Plan.dayText(Plan.planDetailView.day)
         planTime.text = Plan.timeText(Plan.planDetailView.startTime) + " - " + Plan.timeText(Plan.planDetailView.endTime)

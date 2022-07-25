@@ -203,7 +203,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
             self.view.addSubview(self.checkTimeInput)
             if(self.isAddressInvalid == true) {
                 self.checkAddressInput.removeFromSuperview()
-                self.isAddressInvalid = false;
+                self.isAddressInvalid = false
             }
             self.failPlan.frame = CGRect.init(x: 0, y: self.view.frame.size.height - 100, width: self.view.bounds.width, height: 50)
             self.failPlan.textAlignment = .center
@@ -232,8 +232,8 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     // CREATEPLANBUTTONACTION
 
     @objc func cancel() {
-        self.add_success = false;
-        print(add_success);
+        self.add_success = false
+        print(add_success)
     }
     @objc func createPlan() {
         if(add_success == false) {

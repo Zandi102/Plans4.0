@@ -12,8 +12,6 @@
 
 //  Created by Alex Pallozzi on 3/24/22.
 
-
-
 import UIKit
 
 import MapKit
@@ -25,10 +23,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var mapView: MKMapView!
     private var initialSet = false
 
-    private var locationAccess = false;
+    private var locationAccess = false
 
     @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {
-        User.currentUser = User.createCurrentUser(User.currentUser.userName);
+        User.currentUser = User.createCurrentUser(User.currentUser.userName)
         initialSet = false
         mapView.delegate = self
         addMapOverlay(planList: activeUser.plans)
@@ -39,9 +37,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var locationManager = CLLocationManager()
 
     override func viewDidLoad() {
-        super.viewDidLoad();
+        super.viewDidLoad()
         initialSet = false
-        User.currentUser = User.createCurrentUser(User.currentUser.userName);
+        User.currentUser = User.createCurrentUser(User.currentUser.userName)
         determineCurrentLocation()
         //backButton?.addTarget(self, action: #selector(backTap), for: .touchUpInside)
         // refresh annotations if needed
@@ -49,7 +47,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         mapView.removeAnnotations(mapView.annotations)
         
-        addMapOverlay(planList: activeUser.plans);
+        addMapOverlay(planList: activeUser.plans)
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
@@ -66,7 +64,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let initialRegionSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             let initialRegion = MKCoordinateRegion(center: locationValue, span: initialRegionSpan)
             mapView.setRegion(initialRegion, animated: true)
-            
             mapView.addAnnotation(userLocationPin)
             initialSet = true;
         }

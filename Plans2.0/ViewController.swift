@@ -14,7 +14,6 @@ class ViewController: UIViewController, UITextFieldDelegate{
       //  imageView.contentMode = .scaleAspectFill
       //  imageView.backgroundColor = .white
       //  return imageView
-        
    // }()
     
     @IBOutlet weak var username: UILabel!
