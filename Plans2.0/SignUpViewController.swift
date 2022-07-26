@@ -11,10 +11,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameField: UITextField!
     
     @IBOutlet weak var passwordField: UITextField!
-    
-    @IBOutlet weak var emailField: UITextField!
-    
-    @IBOutlet weak var phoneNumberField: UITextField!
+        
+    @IBOutlet weak var phone: UITextField!
     
     @IBOutlet weak var registerButton: UIButton!
     
@@ -61,10 +59,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         else {
             let db = DBManager();
-            let url = URL(string: "http://abdasalaam.com/Functions/register.php")!
+            let url = URL(string: "http://abdasalaam.com/Functions/register3.php")!
             let parameters: [String: Any] = [
                 "username": usernameField.text!,
-                "password": User.hashPassword(toHash: passwordField.text!)
+                "password": User.hashPassword(toHash: passwordField.text!),
+                "phone": phone.text!
             ]
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {
