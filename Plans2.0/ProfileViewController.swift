@@ -7,14 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate{
-
-  //  private let imageView: UIImageView = {
-     //   let imageView = UIImageView()
-      //  imageView.contentMode = .scaleAspectFill
-      //  imageView.backgroundColor = .white
-      //  return imageView
-   // }()
+class ProfileViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var profileButton: UIButton!
@@ -100,7 +93,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
 
 }
-extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func presentPhotoActionSheet() {
         let actionSheet = UIAlertController(title: "Profile Picture", message: "How would you like to select your picture?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

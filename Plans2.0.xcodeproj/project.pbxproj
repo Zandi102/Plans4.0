@@ -21,7 +21,7 @@
 		DDCADCA127ED0634005E23FC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCADCA027ED0634005E23FC /* MapViewController.swift */; };
 		DDFF1C3527C70C4B00951E00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFF1C3427C70C4B00951E00 /* AppDelegate.swift */; };
 		DDFF1C3727C70C4B00951E00 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFF1C3627C70C4B00951E00 /* SceneDelegate.swift */; };
-		DDFF1C3927C70C4B00951E00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFF1C3827C70C4B00951E00 /* ViewController.swift */; };
+		DDFF1C3927C70C4B00951E00 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFF1C3827C70C4B00951E00 /* ProfileViewController.swift */; };
 		DDFF1C3C27C70C4B00951E00 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDFF1C3A27C70C4B00951E00 /* Main.storyboard */; };
 		DDFF1C3E27C70C4D00951E00 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDFF1C3D27C70C4D00951E00 /* Assets.xcassets */; };
 		DDFF1C4127C70C4D00951E00 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDFF1C3F27C70C4D00951E00 /* LaunchScreen.storyboard */; };
@@ -63,7 +63,7 @@
 		DDFF1C3127C70C4B00951E00 /* Plans2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plans2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDFF1C3427C70C4B00951E00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDFF1C3627C70C4B00951E00 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DDFF1C3827C70C4B00951E00 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DDFF1C3827C70C4B00951E00 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DDFF1C3B27C70C4B00951E00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DDFF1C3D27C70C4D00951E00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDFF1C4027C70C4D00951E00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 				DD82B4322819E81600F6DE51 /* CreatePlanViewController.swift */,
 				DDCADC9827ECEF93005E23FC /* EventListViewController.swift */,
 				FA38FCC5280B845D0029D101 /* PlanDetailViewController.swift */,
-				DDFF1C3827C70C4B00951E00 /* ViewController.swift */,
+				DDFF1C3827C70C4B00951E00 /* ProfileViewController.swift */,
 				DDAF854528284955002EF6D6 /* FriendViewController.swift */,
 				DD6C5AD02804D8DA00854929 /* FriendListViewController.swift */,
 				DD8CCA562803443600C37C10 /* InviteViewController.swift */,
@@ -299,7 +299,7 @@
 			files = (
 				DDCADC9F27ED020F005E23FC /* LoginViewController.swift in Sources */,
 				DD6C5AD32804E16B00854929 /* SearchViewController.swift in Sources */,
-				DDFF1C3927C70C4B00951E00 /* ViewController.swift in Sources */,
+				DDFF1C3927C70C4B00951E00 /* ProfileViewController.swift in Sources */,
 				DD82B42D2819E08900F6DE51 /* User.swift in Sources */,
 				DDCADC9A27ECEF93005E23FC /* EventListViewController.swift in Sources */,
 				DD82B4332819E81600F6DE51 /* CreatePlanViewController.swift in Sources */,
@@ -491,7 +491,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T2FLC74C6P;
 				INFOPLIST_FILE = Plans2.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -511,7 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T2FLC74C6P;
 				INFOPLIST_FILE = Plans2.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

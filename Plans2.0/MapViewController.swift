@@ -25,12 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     private var locationAccess = false
 
-    @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {
-        User.currentUser = User.createCurrentUser(User.currentUser.userName)
-        initialSet = false
-        mapView.delegate = self
-        addMapOverlay(planList: activeUser.plans)
-    }
+    @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {}
 
     
 

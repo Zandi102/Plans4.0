@@ -16,6 +16,7 @@ class User : Identifiable {
         let description: String
         let image: String
     }
+    
     //Testing something
     private struct FriendStruct: Decodable {
         enum Category: String, Decodable{

@@ -123,7 +123,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
     private func validate(planToValidate : Plan) {
         // the return value could either be a plan or nil value
         // validate the start time and end time of the plan, to make sure that start time is > current date, and end time is > starttime
-        if (planToValidate.day.compare(Date()).rawValue > 0 && planToValidate.startTime.compare(Date().addingTimeInterval(-120)).rawValue > 0) || (Plan.dayText(planToValidate.day) == Plan.dayText(Date()) && planToValidate.startTime.compare(Date().addingTimeInterval(-120)).rawValue > 0) {
+        if (planToValidate.day.compare(Date.now).rawValue > 0 && planToValidate.startTime.compare(Date.now).rawValue > 0) || (Plan.dayText(planToValidate.day) == Plan.dayText(Date.now) && planToValidate.startTime.compare(Date.now).rawValue > 0) {
             // validate the address string input of the plan
             // sample address: 11317 Bellflower Road, Cleveland, OH 44106
             valid_coord(plan: planToValidate) { (complete, error) in
@@ -136,11 +136,10 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                         self.checkAddressInput.removeFromSuperview()
                         self.failPlan.removeFromSuperview()
                     }
-                    let dayDifference : TimeInterval = planToValidate.day.timeIntervalSince(Date())
                     let planName1 = planToValidate.title
                     let datePicker1 = planToValidate.day
-                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
-                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-(3600 * 4) + dayDifference + 60)
+                    let startPicker1 = planToValidate.startTime.addingTimeInterval(-3600 * 4)
+                    let endPicker1 = planToValidate.endTime.addingTimeInterval(-3600 * 4)
                     let addressName = planToValidate.address!
                     let planNotes1 = planToValidate.notes
                     let db = DBManager();

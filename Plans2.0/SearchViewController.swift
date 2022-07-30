@@ -16,9 +16,8 @@ class SearchViewController: UIViewController {
         let username2: String
         let name: String
     }
-
-    @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchField: UITableView!
     
     var invitations = ["John Smith, click to accept", "Demarcus Cousins, click to accept"]
@@ -26,7 +25,6 @@ class SearchViewController: UIViewController {
     var usersInvited = User.allUsers
     var searchBarIsFull = false
     var doubleClick : String = ""
-    var numberOfInvites1 = 0
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
@@ -65,10 +63,12 @@ class SearchViewController: UIViewController {
         for con in contact {
             contactNames.append(con.givenName + con.familyName)
         }
-        print(contactNames.first)
         return contactNames
     }
-            
+    
+    func determineQuickAdd() -> [String]{
+        return [String]()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchBar.resignFirstResponder()
@@ -87,12 +87,11 @@ class SearchViewController: UIViewController {
     
     func isSearchBarEmpty() -> Bool {
         if(searchBar.text! != "") {
-           // print("search bar full");
             return false
         }
-       // print("search bar empty");
-        return true
-        //return searchBar.text?.isEmpty ?? true;
+        else {
+            return true
+        }
     }
     
     func isFiltering() -> Bool {
@@ -109,22 +108,10 @@ class SearchViewController: UIViewController {
         //message will contain the username and the name of friends that have isAdded = 1 for the corresponing user
         return messages.count
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-     */
-
 }
-extension SearchViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-    }
+extension SearchViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
 }
 
 extension SearchViewController : UITableViewDataSource {
@@ -135,9 +122,6 @@ extension SearchViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
-        let currentUser : User
-   
-        currentUser = filteredUsers[indexPath.row]
         print("hi)")
         
         var cellConfig = cell.defaultContentConfiguration()
@@ -153,39 +137,36 @@ extension SearchViewController : UITableViewDataSource {
         cell.contentConfiguration = cellConfig
         return cell
     }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var parameters: [String: Any] = [:]
-        if (true == true) {
-            let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
-                let db = DBManager()
-                let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
-                if self.isFiltering() {
-                    print(self.filteredUsers[indexPath.row])
-                    parameters = [
-                        "username1": User.currentUser.userName,
-                        "username2": self.filteredUsers[indexPath.row].userName
-                    ]
-                }
-                else {
-                    print(self.usersInvited[indexPath.row])
-                    parameters = [
-                        "username1": User.currentUser.userName,
-                        "username2": self.usersInvited[indexPath.row].userName
-                    ]
-                }
-                let message = db.postRequest(url, parameters)
-            }
-            share.backgroundColor = UIColor.green
-            if (self.numberOfInvites(username1:User.currentUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
-                return [share]
+        let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
+            let db = DBManager()
+            let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
+            if self.isFiltering() {
+                print(self.filteredUsers[indexPath.row])
+                parameters = [
+                    "username1": User.currentUser.userName,
+                    "username2": self.filteredUsers[indexPath.row].userName
+                ]
             }
             else {
-                return nil
+                print(self.usersInvited[indexPath.row])
+                parameters = [
+                    "username1": User.currentUser.userName,
+                    "username2": self.usersInvited[indexPath.row].userName
+                ]
             }
+            _ = db.postRequest(url, parameters)
+        }
+        share.backgroundColor = UIColor.green
+        if (self.numberOfInvites(username1:User.currentUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
+            return [share]
         }
         else {
             return nil
         }
+        
     }
 }
 
