@@ -207,15 +207,10 @@ class User : Identifiable {
         //message will contain the username and the name of friends that have isAdded = 1 for the corresponing user
         if messages.count > 0 {
             for message in messages {
-                print("In User Class loading Friends")
-                //print(message)
                 let jsonData = message.data(using: .utf8)!
                 let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData)
                 friends.append(User(username: resp.username2, name: resp.name))
             }
-        }
-        else {
-            print("No friends Found")
         }
     }
     /*private static func removeDupInvite(invites : [User]) -> [User] {
@@ -242,9 +237,6 @@ class User : Identifiable {
                 let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData)
                 invites.append(User(username: resp.username2, name: resp.name))
             }
-        }
-        else {
-            print("No friends Found")
         }
     }
     
@@ -298,7 +290,6 @@ class User : Identifiable {
         self.plans = [Plan]()
         if messages.count > 0 {
             for message in messages {
-                print("In Plan Class")
                 //print(message)
                 let jsonData = message.data(using: .utf8)!
                 //print(jsonData3)
@@ -322,7 +313,6 @@ class User : Identifiable {
         }
         if messages2.count > 0 {
             for message2 in messages2 {
-                print("In Plan Class")
                 //print(message2)
                 let jsonData2 = message2.data(using: .utf8)!
                 //print(jsonData3)
