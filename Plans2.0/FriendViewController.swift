@@ -10,11 +10,8 @@ import UIKit
 class FriendViewController: UIViewController {
 
     @IBOutlet weak var usernameField: UILabel!
-    
     @IBOutlet weak var nameField: UILabel!
-    
     @IBOutlet weak var descriptionField: UITextView!
-    
     @IBOutlet weak var friendPicture: UIImageView!
     
     override func viewDidLoad() {

@@ -145,18 +145,6 @@ class Plan : Equatable, Identifiable {
 
     
 
-    // sample plans
-    private static var plan1 = Plan(title: "Pickup Basketball", date: "4/14/2021", startTime1: "7:50", endTime1: "", address: "11 Tuttle Drive", notes: "Cool game", owner: User.sampleFriendList[0])
-
-    private static var plan2 = Plan(title: "Pickup Soccer", date: "4/15/2021", startTime1: "2:35", endTime1: "", address: "15 Tuttle Drive", notes: "Soccer game in my backyard, bring friends!", owner: User.sampleFriendList[1])
-
-    private static var plan3 = Plan(title: "Birthday Party", date: "6/15/2021", startTime1: "6:00", endTime1: "", address: "23 Pico Ave", notes: "BYOB", owner: User.sampleFriendList[2])
-
-    private static var plan4 = Plan(title: "Graduation Party", date: "5/04/2021", startTime1: "7:00", endTime1: "", address: "21 Wysteria Lane", notes: "Celebrate our sons graduation!", owner: User.sampleFriendList[3])
-
-    // a sample plan list
-    public static var samplePlanList = [plan1, plan2, plan3, plan4];
-    
     // checks if the inputted user is the plan owner
     func isPlanOwner(user: User) -> Bool {
         return user == self.owner

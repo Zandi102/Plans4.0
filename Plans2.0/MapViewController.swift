@@ -29,11 +29,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialSet = false
         User.currentUser = User.createCurrentUser(User.currentUser.userName)
+        mapView.delegate = self
+        initialSet = false
         determineCurrentLocation()
         mapView.delegate = self
-        mapView.removeAnnotations(mapView.annotations)
         addMapOverlay(planList: activeUser.plans)
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -86,6 +86,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView.glyphImage = UIImage(named: "Basketball")
         }
         else {
+            print(annotationView.annotation!.title!)
+
             annotationView.markerTintColor = .black
             annotationView.glyphImage = UIImage(named: "connecticon")
         }

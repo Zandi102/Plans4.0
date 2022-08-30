@@ -16,19 +16,17 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var userEmailField: UITextField!
     @IBOutlet weak var userDescriptionField: UITextView!
     
-    
     @IBOutlet weak var saveChangesButton: UIButton? = {
         let saveChangesButton = UIButton()
         saveChangesButton.backgroundColor = .white
         return saveChangesButton
     }()
-    
-    
     private let button: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
         return button;
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
@@ -56,7 +54,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
         saveChangesButton!.layer.cornerRadius = saveChangesButton!.bounds.size.height / 2.0
-
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -65,6 +62,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
         userDescriptionField.resignFirstResponder()
         return true
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -72,6 +70,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
     @objc func changeProfile() {
         presentPhotoActionSheet()
     }
+    
     @objc func buttonTap() {
         let strBase64 = profilePicture.image!.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         User.currentUser.fullName = self.userEmailField.text!
@@ -87,12 +86,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
             "description":userDescriptionField.text!,
             "image":strBase64
         ]
-        let message = db.postRequest(url, parameters)
+        _ = db.postRequest(url, parameters)
         User.currentUser = User.createCurrentUser(User.currentUser.userName)
     }
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
 
 }
+
 extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func presentPhotoActionSheet() {
         let actionSheet = UIAlertController(title: "Profile Picture", message: "How would you like to select your picture?", preferredStyle: .actionSheet)
@@ -128,10 +128,9 @@ extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationC
             return
         }
         self.profilePicture.image = image
-        
         self.profilePicture.layer.masksToBounds = true
-        
     }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

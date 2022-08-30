@@ -340,89 +340,9 @@ class User : Identifiable {
             print("No Plans Found")
         }
     }
-
-
 }
 #if DEBUG
 extension User {
-    private static var friend1 = User(fullName: "Jack Torres", userName: "jack2012", email: "jack@mail.com", phone: 2345678901, age: 21, password: "password123").addPlan(
-        Plan(title: "Dinner at Piada",
-             startTime: Date().addingTimeInterval(2500.0),
-             endTime: Date().addingTimeInterval(5000.0),
-             address: "13947 Cedar Rd, South Euclid, OH, 44118",
-             notes: "")).addPlan(
-        Plan(title: "go to the movies",
-            startTime: Date().addingTimeInterval(5000.0),
-            endTime: Date().addingTimeInterval(7500.00),
-            address: "2163 Lee Rd, Cleveland Heights, OH 44118",
-            notes: "drama preferred")).addPlan(
-        Plan(title: "clubbin at barley",
-             startTime: Date().addingTimeInterval(7000.0),
-             endTime: Date().addingTimeInterval(9000.0),
-             address: "1261 W 6th St, Cleveland, OH 44113",
-             notes: ""))
-    private static var friend2 = User(fullName: "Frank Miller", userName: "frankie2005", email: "frankie@mail.com", phone: 4567890123, age: 21, password: "password123").addPlan(
-        Plan(title: "fiji rave",
-             startTime: Date().addingTimeInterval(4550.0),
-             endTime: Date().addingTimeInterval(6000.0),
-             address: "11317 Bellflower Rd, Cleveland, OH, 44106",
-             notes: "make sure to register before")).addPlan(
-        Plan(title: "BEACH!",
-            startTime: Date().addingTimeInterval(18000.0),
-            endTime: Date().addingTimeInterval(24000.0),
-            address: "Lakewood",
-            notes: "bring trunks!"))
-    private static var friend3 = User(fullName: "Eddie Johnson", userName: "eddie01", email: "eddie01@mail.com", phone: 5678901234, age: 21, password: "password123").addPlan(
-        Plan(title: "Movie Night",
-             startTime: Date().addingTimeInterval(24300.0),
-             endTime: Date().addingTimeInterval(32300.0),
-             address: "SmAprtmt",
-             notes: "popcorn needed")).addPlan(
-        Plan(title: "Study Sesh",
-             startTime: Date().addingTimeInterval(42000),
-             endTime: Date().addingTimeInterval(45000),
-             address: "library",
-             notes: "")).addPlan(
-        Plan(title: "To the mall",
-             startTime: Date().addingTimeInterval(15100.0),
-             endTime: Date().addingTimeInterval(15100.0),
-             address: "beachwood mall",
-             notes: "the mall"))
-    private static var friend4 = User(fullName: "Mark Zuckerberg", userName: "markFacebook!!", email: "markZ@gmail.com", phone: 2848328834, age: 21, password: "password123").addPlan(
-        Plan(title: "Dinner at Piada",
-             startTime: Date().addingTimeInterval(2500.0),
-             endTime: Date().addingTimeInterval(5000.0),
-             address: "13947 Cedar Rd, South Euclid, OH, 44118",
-             notes: "")).addPlan(
-        Plan(title: "go to the movies",
-            startTime: Date().addingTimeInterval(5000.0),
-            endTime: Date().addingTimeInterval(7500.00),
-            address: "2163 Lee Rd, Cleveland Heights, OH 44118",
-            notes: "drama preferred")).addPlan(
-        Plan(title: "clubbin at barley",
-             startTime: Date().addingTimeInterval(7000.0),
-             endTime: Date().addingTimeInterval(9000.0),
-             address: "1261 W 6th St, Cleveland, OH 44113",
-             notes: ""))
-    private static var friend5 = User(fullName: "Helen Molteini", userName: "hlm35", email: "helenmolteini@gmail.com", phone: 2848328834, age: 21, password: "chicken").addPlan(
-        Plan(title: "Dinner at Piada",
-             startTime: Date().addingTimeInterval(2500.0),
-             endTime: Date().addingTimeInterval(5000.0),
-             address: "13947 Cedar Rd, South Euclid, OH, 44118",
-             notes: "")).addPlan(
-        Plan(title: "go to the movies",
-            startTime: Date().addingTimeInterval(5000.0),
-            endTime: Date().addingTimeInterval(7500.00),
-            address: "2163 Lee Rd, Cleveland Heights, OH 44118",
-            notes: "drama preferred")).addPlan(
-        Plan(title: "clubbin at barley",
-             startTime: Date().addingTimeInterval(7000.0),
-             endTime: Date().addingTimeInterval(9000.0),
-             address: "1261 W 6th St, Cleveland, OH 44113",
-             notes: ""))
-
-    // sample friends list
-    public static var sampleFriendList = [friend1, friend2, friend3, friend4, friend5];
     
     private static func allFriends() -> [User]{
         var users : [User] = []
@@ -441,9 +361,7 @@ extension User {
     }
     
     public static var allUsers = allFriends()
-    
     // sample test user with existing plans and existing friends
-    
     
     public func setUsername(username:String) {
         self.userName = username;

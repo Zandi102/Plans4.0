@@ -20,9 +20,7 @@ class FriendListViewController: UIViewController {
         let description: String
         let image: String
     }
-    
     @IBOutlet weak var friendTable: UITableView!
-    
     var friends = User.currentUser.friends
     
     override func viewDidLoad() {
@@ -34,15 +32,7 @@ class FriendListViewController: UIViewController {
     @IBAction func unwindToFriendList(_ sender: UIStoryboardSegue) {}
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often wxant to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 extension FriendListViewController : UITableViewDelegate {
@@ -64,6 +54,7 @@ extension FriendListViewController : UITableViewDelegate {
         }
     }
 }
+
 extension FriendListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
@@ -93,7 +84,7 @@ extension FriendListViewController : UITableViewDataSource {
                 "username1": User.currentUser.userName,
                 "username2": self.friends[indexPath.row].userName
             ]
-            let message = db.postRequest(url, parameters1)
+            _ = db.postRequest(url, parameters1)
             self.friends.remove(at: indexPath.row)
             tableView.reloadData()
         }
