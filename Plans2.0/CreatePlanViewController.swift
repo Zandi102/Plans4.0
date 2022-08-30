@@ -154,7 +154,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                             "description":planNotes1,
                             "username": username
                         ]
-                    let message = db.postRequest(url, parameters)
+                    _ = db.postRequest(url, parameters)
                     planToValidate._coord = CLLocationCoordinate2D(latitude: complete.latitude, longitude: complete.longitude)
                     planToValidate.validated = true
                     self.add_success = true

@@ -63,7 +63,21 @@ class SearchViewController: UIViewController {
         for con in contact {
             contactNames.append(con.givenName + con.familyName)
         }
+        
         return contactNames
+    }
+    
+    func getPhoneNumbers() -> [String] {
+        let predicate = CNContact.predicateForContactsInContainer(withIdentifier: store.defaultContainerIdentifier())
+        let contact = try! store.unifiedContacts(matching: predicate, keysToFetch: [CNContactBirthdayKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactGivenNameKey as CNKeyDescriptor, CNContactPhoneNumbersKey as CNKeyDescriptor, CNContactDatesKey as CNKeyDescriptor])
+        let date = DateFormatter()
+        date.dateFormat = "MM/dd/yyyy"
+        var phoneNumbers = [String]()
+        for con in contact {
+            phoneNumbers.append((con.phoneNumbers.first?.value.stringValue)!)
+        }
+        
+        return phoneNumbers
     }
     
     func determineQuickAdd() -> [String]{

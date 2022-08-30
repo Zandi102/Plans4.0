@@ -110,7 +110,6 @@ extension EventListViewController : UITableViewDataSource {
         cellConfig.secondaryTextProperties.color = .white
         cell.contentConfiguration = cellConfig
         return cell
-        
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if User.currentUser.plans[indexPath.row].ownerUsername == User.currentUser.userName {
