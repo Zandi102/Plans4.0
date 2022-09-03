@@ -87,7 +87,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
             "image":strBase64
         ]
         _ = db.postRequest(url, parameters)
-        User.currentUser = User.createCurrentUser(User.currentUser.userName)
+        //User.currentUser = User.createCurrentUser(User.currentUser.userName)
+        User.currentUser.updateName(userEmailField.text!);
+        User.currentUser.updateDescription(userDescriptionField.text!);
+        User.currentUser.updateImage(strBase64);
     }
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
 

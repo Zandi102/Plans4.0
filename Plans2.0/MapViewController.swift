@@ -34,6 +34,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         initialSet = false
         determineCurrentLocation()
         mapView.delegate = self
+        //adds the annotations to map
         addMapOverlay(planList: activeUser.plans)
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
