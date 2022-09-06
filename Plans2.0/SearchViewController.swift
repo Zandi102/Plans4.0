@@ -13,7 +13,7 @@ class SearchViewController: UIViewController {
         enum Category: String, Decodable{
             case swift, combine, debugging, xcode
         }
-        let username2: String
+        let username: String
         let name: String
     }
     
@@ -78,6 +78,18 @@ class SearchViewController: UIViewController {
         }
         
         return phoneNumbers
+    }
+    
+    func getUsersByPhone() {
+        let numbersFromContacts = getPhoneNumbers()
+        
+        for num in numbersFromContacts {
+            let db = DBManager()
+            let url = (URL(string: "http://abdasalaam.com/Functions/loadInvitationsBetweenFriends.php?phone=\(num)"))!
+            let messages = db.getRequest(url)
+            
+            
+        }
     }
     
     func determineQuickAdd() -> [String]{
