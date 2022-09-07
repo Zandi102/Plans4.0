@@ -30,7 +30,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         passwordField.autocorrectionType = .no
         phone.autocorrectionType = .no
         passwordField.isSecureTextEntry = true
-        
+        phone.delegate = self
         super.viewDidLoad()
         label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100)
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside)
@@ -38,6 +38,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         registerButton.layer.cornerRadius = registerButton.bounds.size.height / 2.0
         loginButton.layer.cornerRadius = loginButton.bounds.size.height / 2.0
+    }
+    
+    //MARK - UITextField Delegates
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //For mobile numer validation
+        if textField == phone {
+            let allowedCharacters = CharacterSet(charactersIn:"0123456789 ")//Here change this characters based on your requirement
+            let characterSet = CharacterSet(charactersIn: string)
+            return allowedCharacters.isSuperset(of: characterSet)
+        }
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -52,10 +63,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func unwindToSignup(_ sender: UIStoryboardSegue) {}
     
     @objc func register () {
-        let passLength = passwordField.text!
-        let userLength = usernameField.text!
+        let passLength = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let userLength = usernameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if(passLength.count < 8 || userLength.count < 2) {
             view.addSubview(label)
+            
             label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
             label.textAlignment = .center
             label.text = "Invalid user credentials."
@@ -66,16 +78,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/register3.php")!
             let parameters: [String: Any] = [
-                "username": usernameField.text!,
-                "password": User.hashPassword(toHash: passwordField.text!),
-                "phone": phone.text!
+                "username": userLength,
+                "password": User.hashPassword(toHash: passLength),
+                "phone": phone.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             ]
             let message = db.postRequest(url, parameters)
             if (message == "User created successfully") {
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
                 //publicUsername will be used in other view controllers to find the info related to the user logged in
-                User.currentUser = User.createCurrentUser(usernameField.text!)
+                User.currentUser = User.createCurrentUser(userLength)
                 switchScreen()
             }
             else if (message == "User already exist") {

@@ -54,8 +54,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     }
     
     @objc func login (){
-        let passLength = passwordLogin.text!
-        let userLength = passwordLogin.text!
+        let passLength = passwordLogin.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let userLength = usernameLogin.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if(passLength.count < 7 || userLength.count < 2) {
             view.addSubview(label)
             label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
@@ -68,13 +68,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/login.php")!
             let parameters: [String: Any] = [
-                "username": usernameLogin.text!,
-                "password": User.hashPassword(toHash: passwordLogin.text!)
+                "username": userLength,
+                "password": User.hashPassword(toHash: passLength)
             ]
             let message = db.postRequest(url, parameters)
             if (message == "login successful") {
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
-                User.currentUser = User.createCurrentUser(usernameLogin.text!)
+                User.currentUser = User.createCurrentUser(userLength)
                 usernameLogin.text = ""
                 passwordLogin.text = ""
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
