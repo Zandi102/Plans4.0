@@ -63,8 +63,8 @@ class User : Identifiable {
     public var userPlans : [Plan] = []
     public var friends : [User] = []
     public var invites : [User] = []
-    //public var isAdded : Int = 0
     public static var friendToShow : User = User();
+    public static var quickAddUsers = [User]()
     public var image : String = ""
     
     

@@ -51,7 +51,18 @@ class SearchViewController: UIViewController {
             }
         } else if authorize == .authorized {
             self.contactNames = self.getContactNames()
+            if(User.quickAddUsers.isEmpty) {
+                User.quickAddUsers = getUsersByPhone()
+                print(getPhoneNumbers())
+                print("How many accounts in contacts:")
+                print(getUsersByPhone())
+            }
         }
+    }
+    
+    func trimNumber(num: String) -> String {
+        let newNumb = num.replacingOccurrences(of: "-", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "")
+        return newNumb
     }
     
     func getContactNames() -> [String] {
@@ -74,22 +85,36 @@ class SearchViewController: UIViewController {
         date.dateFormat = "MM/dd/yyyy"
         var phoneNumbers = [String]()
         for con in contact {
-            phoneNumbers.append((con.phoneNumbers.first?.value.stringValue)!)
+            phoneNumbers.append(trimNumber(num: (con.phoneNumbers.first?.value.stringValue)!))
         }
         
         return phoneNumbers
     }
     
-    func getUsersByPhone() {
+    func getUsersByPhone() -> [User] {
         let numbersFromContacts = getPhoneNumbers()
+        
+        var userArray = [User]()
         
         for num in numbersFromContacts {
             let db = DBManager()
-            let url = (URL(string: "http://abdasalaam.com/Functions/loadInvitationsBetweenFriends.php?phone=\(num)"))!
+            if URL(string: "http://abdasalaam.com/Functions/loadUserByPhone.php?phone=\(num)") == nil {
+                continue
+            }
+            let url = URL(string: "http://abdasalaam.com/Functions/loadUserByPhone.php?phone=\(num)")!
+            
             let messages = db.getRequest(url)
-            
-            
+            let user = User()
+            if messages.count > 0 {
+                let userFields = messages[0]
+                let jsonData = userFields.data(using: .utf8)!
+                let resp: FriendStruct = try! JSONDecoder().decode(FriendStruct.self, from: jsonData)
+                user.fullName = resp.name
+                user.userName = resp.username
+                userArray.append(user)
+            }
         }
+        return userArray
     }
     
     func determineQuickAdd() -> [String]{
@@ -142,55 +167,85 @@ extension SearchViewController : UITableViewDelegate {
 
 extension SearchViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {return filteredUsers.count}
-        return 0
+        if isFiltering() {
+            return filteredUsers.count
+        }
+        else {
+            return User.quickAddUsers.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath);
-        print("hi)")
-        
-        var cellConfig = cell.defaultContentConfiguration()
-        if (filteredUsers[indexPath.row].fullName.count < 3) {
-            cellConfig.text = filteredUsers[indexPath.row].userName
+        if isFiltering() {
+            var cellConfig = cell.defaultContentConfiguration()
+            if (filteredUsers[indexPath.row].fullName.count < 3) {
+                cellConfig.text = filteredUsers[indexPath.row].userName
+            }
+            else {
+                cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName
+            }
+            cellConfig.textProperties.color = .white
+            cellConfig.secondaryText = "Swipe to send invitation"
+            cellConfig.secondaryTextProperties.color = .white
+            cell.contentConfiguration = cellConfig
+            return cell
         }
         else {
-            cellConfig.text = filteredUsers[indexPath.row].fullName + ", " + filteredUsers[indexPath.row].userName
+            var cellConfig = cell.defaultContentConfiguration()
+            if (User.quickAddUsers[indexPath.row].fullName.count < 3) {
+                cellConfig.text = "From Contacts: " + User.quickAddUsers[indexPath.row].userName
+            }
+            else {
+                cellConfig.text = "From Contacts: " + User.quickAddUsers[indexPath.row].fullName + ", " + User.quickAddUsers[indexPath.row].userName
+            }
+            cellConfig.textProperties.color = .white
+            cellConfig.secondaryText = "Swipe to send invitation"
+            cellConfig.secondaryTextProperties.color = .white
+            cell.contentConfiguration = cellConfig
+            return cell
         }
-        cellConfig.textProperties.color = .white
-        cellConfig.secondaryText = "Swipe to send invitation"
-        cellConfig.secondaryTextProperties.color = .white
-        cell.contentConfiguration = cellConfig
-        return cell
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var parameters: [String: Any] = [:]
-        let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
-            let db = DBManager()
-            let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
-            if self.isFiltering() {
-                print(self.filteredUsers[indexPath.row])
-                parameters = [
-                    "username1": User.currentUser.userName,
-                    "username2": self.filteredUsers[indexPath.row].userName
-                ]
-            }
-            else {
-                print(self.usersInvited[indexPath.row])
+        if isFiltering() {
+            let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
+                let db = DBManager()
+                let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
                 parameters = [
                     "username1": User.currentUser.userName,
                     "username2": self.usersInvited[indexPath.row].userName
                 ]
+                
+                _ = db.postRequest(url, parameters)
             }
-            _ = db.postRequest(url, parameters)
-        }
-        share.backgroundColor = UIColor.green
-        if (self.numberOfInvites(username1:User.currentUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
-            return [share]
+            share.backgroundColor = UIColor.green
+            if (self.numberOfInvites(username1:User.currentUser.userName,username2: self.filteredUsers[indexPath.row].userName) == 0) {
+                return [share]
+            }
+            else {
+                return nil
+            }
         }
         else {
-            return nil
+            let share = UITableViewRowAction(style: .normal, title: "Invite") { action, index in
+                let db = DBManager()
+                let url = URL(string: "http://abdasalaam.com/Functions/addFriend.php")!
+                print(self.usersInvited[indexPath.row])
+                parameters = [
+                    "username1": User.currentUser.userName,
+                    "username2": User.quickAddUsers[indexPath.row].userName
+                ]
+                _ = db.postRequest(url, parameters)
+            }
+            share.backgroundColor = UIColor.green
+            if (self.numberOfInvites(username1:User.currentUser.userName,username2: User.quickAddUsers[indexPath.row].userName) == 0) {
+                return [share]
+            }
+            else {
+                return nil
+            }
         }
         
     }
