@@ -10,6 +10,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameField: UITextField!
     
+    
     @IBOutlet weak var passwordField: UITextField!
         
     @IBOutlet weak var phone: UITextField!
@@ -25,6 +26,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }();
     
     public override func viewDidLoad() {
+        usernameField.autocorrectionType = .no
+        passwordField.autocorrectionType = .no
+        phone.autocorrectionType = .no
+        passwordField.isSecureTextEntry = true
+        
         super.viewDidLoad()
         label.frame = CGRect.init(x: view.frame.size.width - 1000, y: view.frame.size.height - 200, width: 500, height: 100)
         registerButton?.addTarget(self, action: #selector(register), for: .touchUpInside)

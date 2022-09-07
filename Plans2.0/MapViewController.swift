@@ -17,6 +17,7 @@ import UIKit
 import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     let activeUser : User = User.currentUser;
+    var refresher : MapRefresher!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var eventListButton: UIButton!
@@ -29,15 +30,35 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        User.currentUser = User.createCurrentUser(User.currentUser.userName)
+        //User.currentUser = User.createCurrentUser(User.currentUser.userName)
         mapView.delegate = self
         initialSet = false
         determineCurrentLocation()
         mapView.delegate = self
-        addMapOverlay(planList: activeUser.plans)
+        //adds the annotations to map
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        Task {
+            refresher = MapRefresher()
+            addMapOverlay(planList: await refresher.refreshUserPlans())
+        }
     }
+    
+    public actor MapRefresher {
+        var plans : [Plan]
+        
+        init () {
+            User.currentUser = User.createCurrentUser(User.currentUser.userName)
+            plans = User.currentUser.plans;
+        }
+        func refreshUserPlans() -> [Plan]{
+            plans = User.createCurrentUser(User.currentUser.userName).plans
+            print("u gay")
+            return plans
+            //do nothing for now
+        }
+    }
+    
     
     // location manager extension that gets the user's current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

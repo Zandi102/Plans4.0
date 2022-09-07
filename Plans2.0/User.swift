@@ -124,6 +124,18 @@ class User : Identifiable {
         return user;
     }
     
+    public func updateName(_ name : String) {
+        User.currentUser.fullName = name;
+    }
+    
+    public func updateDescription(_ desc : String) {
+        User.currentUser.description = desc;
+    }
+    
+    public func updateImage(_ img : String) {
+        User.currentUser.image = img;
+    }
+    
     init(fullName : String, userName : String, email : String, phone : Int, age : Int, password : String) {
         self.fullName = fullName
         self.userName = userName

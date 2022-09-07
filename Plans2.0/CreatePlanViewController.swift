@@ -13,6 +13,7 @@
 import UIKit
 import Foundation
 import CoreLocation
+import MapKit
 
 class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     private struct PlanStruct: Decodable {
