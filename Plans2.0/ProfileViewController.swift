@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
     }()
     
     override func viewDidLoad() {
+        userEmailField.autocorrectionType = .no
         super.viewDidLoad();
         saveChangesButton?.addTarget(self, action: #selector(buttonTap), for: .touchUpInside)
         profileButton?.addTarget(self, action: #selector(changeProfile), for: .touchUpInside)
@@ -75,7 +76,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
         let strBase64 = profilePicture.image!.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         User.currentUser.fullName = self.userEmailField.text!
         User.currentUser.description = self.userDescriptionField.text!
-        let db = DBManager();
+        
         let url = URL(string: "http://abdasalaam.com/Functions/modifyUser.php")!
         let parameters: [String: Any] = [
             "username":User.currentUser.userName,
@@ -86,13 +87,27 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
             "description":userDescriptionField.text!,
             "image":strBase64
         ]
-        _ = db.postRequest(url, parameters)
+        Task {
+            let save = saveConcurrently()
+            _ = await save.postReq(url, parameters)
+        }
         //User.currentUser = User.createCurrentUser(User.currentUser.userName)
         User.currentUser.updateName(userEmailField.text!);
         User.currentUser.updateDescription(userDescriptionField.text!);
         User.currentUser.updateImage(strBase64);
     }
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
+    
+    actor saveConcurrently {
+        init() {
+        }
+        
+        func postReq(_ url : URL, _ parameters: [String: Any]) {
+            let db = DBManager();
+            _ = db.postRequest(url, parameters)
+            
+        }
+    }
 
 }
 

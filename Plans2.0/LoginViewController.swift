@@ -30,6 +30,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     }();
     
     override func viewDidLoad() {
+        usernameLogin.autocorrectionType = .no
+        passwordLogin.autocorrectionType = .no
+        passwordLogin.isSecureTextEntry = true
         super.viewDidLoad()
         loginButton?.addTarget(self, action: #selector(login), for: .touchUpInside)
         usernameLogin.delegate = self
