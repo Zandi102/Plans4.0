@@ -93,8 +93,9 @@
                                 <color key="backgroundColor" red="0.071178318300000001" green="0.071178318300000001" blue="0.071178318300000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title=" Create" image="paperplane.fill" catalog="system">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <imageReference key="image" image="paperplane.fill" catalog="system" symbolScale="large"/>
                                 </state>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p04-xw-KE5">
@@ -1020,9 +1021,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Jje-wv-eE3"/>
-        <segue reference="2bU-EG-kJa"/>
-        <segue reference="EhU-S8-eJQ"/>
-        <segue reference="ar2-60-V7U"/>
+        <segue reference="C1Q-Um-tAr"/>
+        <segue reference="JVA-Zr-rlI"/>
+        <segue reference="CRd-Ae-7HF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemOrangeColor"/>
     <resources>

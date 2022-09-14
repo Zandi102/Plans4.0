@@ -53,7 +53,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         func refreshUserPlans() -> [Plan]{
             plans = User.createCurrentUser(User.currentUser.userName).plans
-            print("u gay")
             return plans
             //do nothing for now
         }

@@ -57,8 +57,8 @@ extension InviteViewController : UITableViewDataSource {
             cellConfig.secondaryText = "Double Click to Add!"
         }
         cellConfig.secondaryText = "Double Click to Add!"
-        cellConfig.secondaryTextProperties.color = .systemOrange
-        cellConfig.textProperties.color = .systemOrange
+        cellConfig.secondaryTextProperties.color = .white
+        cellConfig.textProperties.color = .white
         cell.contentConfiguration = cellConfig
         return cell
     }
