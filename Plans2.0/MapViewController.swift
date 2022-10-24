@@ -97,7 +97,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView.glyphImage = UIImage(named: "bmoicon")
         }
         else if annotationView.annotation!.title!?.localizedCaseInsensitiveContains("birthday") == true || annotationView.annotation!.title!?.localizedCaseInsensitiveContains("birth day") == true {
-            print(annotationView.annotation!.title!)
             annotationView.markerTintColor = .systemPink
             annotationView.glyphImage = UIImage(named: "BirthdayCake")
         }
@@ -106,8 +105,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             annotationView.glyphImage = UIImage(named: "Basketball")
         }
         else {
-            print(annotationView.annotation!.title!)
-
             annotationView.markerTintColor = .black
             annotationView.glyphImage = UIImage(named: "connecticon")
         }

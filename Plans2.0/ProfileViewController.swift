@@ -76,7 +76,9 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
         let strBase64 = profilePicture.image!.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         User.currentUser.fullName = self.userEmailField.text!
         User.currentUser.description = self.userDescriptionField.text!
-        
+        User.currentUser.userName = self.userEmailField.text!;
+        User.currentUser.description = userDescriptionField.text!;
+        User.currentUser.updateImage(strBase64);
         let url = URL(string: "http://abdasalaam.com/Functions/modifyUser.php")!
         let parameters: [String: Any] = [
             "username":User.currentUser.userName,
@@ -84,17 +86,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate{
             "age":"0",
             "phone":"0",
             "name":userEmailField.text!,
-            "description":userDescriptionField.text!,
+            "description": User.currentUser.description,
             "image":strBase64
         ]
         Task {
             let save = saveConcurrently()
             _ = await save.postReq(url, parameters)
         }
-        //User.currentUser = User.createCurrentUser(User.currentUser.userName)
-        User.currentUser.updateName(userEmailField.text!);
-        User.currentUser.updateDescription(userDescriptionField.text!);
-        User.currentUser.updateImage(strBase64);
     }
     @IBAction func unwindToProfile(_ sender: UIStoryboardSegue) {}
     
