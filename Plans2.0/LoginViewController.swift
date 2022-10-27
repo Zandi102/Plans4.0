@@ -86,10 +86,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Please make sure the credentials are correct."
-                let count = 0
-                while count < 10000 {
-                    
-                }
             }
             else {
                 view.addSubview(label);
