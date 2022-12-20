@@ -72,22 +72,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                 "password": User.hashPassword(toHash: passLength)
             ]
             let message = db.postRequest(url, parameters)
-            if (message == "login successful") {
+            switch (message) {
+            case "login successful":
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 User.currentUser = User.createCurrentUser(userLength)
                 usernameLogin.text = ""
                 passwordLogin.text = ""
-                //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
-                //publicUsername will be used in other view controllers to find the info related to the user logged in
                 switchScreen();
-            }
-            else if (message == "login unsuccessful") {
+                
+            case "login unsuccessful":
                 view.addSubview(label)
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Please make sure the credentials are correct."
-            }
-            else {
+        
+            default:
                 view.addSubview(label);
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center

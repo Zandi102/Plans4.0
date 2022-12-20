@@ -146,7 +146,7 @@ class CreatePlanViewController: UIViewController, UITextFieldDelegate, UITextVie
                             "plan_name":planToValidate.title,
                             "startTime":Plan.timeText(planToValidate.startTime),
                             "endTime":Plan.timeText(planToValidate.endTime),
-                            "date":planToValidate.day.description,
+                            "date": planToValidate.day,
                             "address":planToValidate.address!,
                             "description":planToValidate.notes,
                             "username": User.currentUser.userName

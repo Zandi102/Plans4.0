@@ -52,10 +52,7 @@ class SearchViewController: UIViewController {
         } else if authorize == .authorized {
             self.contactNames = self.getContactNames()
             if(User.quickAddUsers.isEmpty) {
-                User.quickAddUsers = getUsersByPhone()
-                print(getPhoneNumbers())
-                print("How many accounts in contacts:")
-                print(getUsersByPhone())
+                //User.quickAddUsers = getUsersByPhone()
             }
         }
     }

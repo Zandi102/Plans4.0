@@ -13,7 +13,6 @@
 //  Created by Alex Pallozzi on 3/24/22.
 
 import UIKit
-
 import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
     let activeUser : User = User.currentUser;
@@ -25,6 +24,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private var initialSet = false
     private var locationAccess = false
     @IBAction func unwindToMap(_ sender: UIStoryboardSegue) {}
+    
+    private var imageMap = Dictionary<String, UIImage>();
     
     var locationManager = CLLocationManager()
     

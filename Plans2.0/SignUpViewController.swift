@@ -10,7 +10,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameField: UITextField!
     
-    
     @IBOutlet weak var passwordField: UITextField!
         
     @IBOutlet weak var phone: UITextField!
@@ -67,7 +66,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let userLength = usernameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if(passLength.count < 8 || userLength.count < 2) {
             view.addSubview(label)
-            
             label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
             label.textAlignment = .center
             label.text = "Invalid user credentials."
@@ -83,21 +81,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 "phone": phone.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             ]
             let message = db.postRequest(url, parameters)
-            if (message == "User created successfully") {
+            switch(message) {
+            case "User created successfully":
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 //THIS PUBLIC USERNAME VAR WILL ONLY BE INSTANTIATED IF THERE IS SUCCESSFUL LOGIN
                 //publicUsername will be used in other view controllers to find the info related to the user logged in
                 User.currentUser = User.createCurrentUser(userLength)
                 switchScreen()
-            }
-            else if (message == "User already exist") {
+            case "User already exist":
                 print(message)
                 view.addSubview(label)
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
                 label.text = "Username already taken."
-            }
-            else {
+            default:
                 view.addSubview(label);
                 label.frame = CGRect.init(x: 0, y: view.frame.size.height - 200, width: self.view.bounds.width, height: 100)
                 label.textAlignment = .center
