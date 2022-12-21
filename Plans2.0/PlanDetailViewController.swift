@@ -11,13 +11,9 @@ class PlanDetailViewController : UIViewController {
     @IBAction func unwindToPlanList(_ sender: UIStoryboardSegue) {}
 
     @IBOutlet weak var planTitle: UILabel!
-    
     @IBOutlet weak var planAddress: UILabel!
-    
     @IBOutlet weak var planDate: UILabel!
-    
     @IBOutlet weak var planTime: UILabel!
-    
     @IBOutlet weak var planDescription: UITextView!
     
     override func viewDidLoad() {

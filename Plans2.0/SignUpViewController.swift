@@ -9,13 +9,9 @@ import UIKit
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameField: UITextField!
-    
     @IBOutlet weak var passwordField: UITextField!
-        
     @IBOutlet weak var phone: UITextField!
-    
     @IBOutlet weak var registerButton: UIButton!
-    
     @IBOutlet weak var loginButton: UIButton!
     
     private let label: UILabel = {
@@ -73,6 +69,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             passwordField.text = ""
         }
         else {
+            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+            UserDefaults.standard.setValue(userLength, forKey: "username")
+            UserDefaults.standard.setValue(passLength, forKey: "password")
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/register3.php")!
             let parameters: [String: Any] = [

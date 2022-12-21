@@ -1,22 +1,3 @@
-//
-//  Plan.swift
-//  PlansMap
-//
-//  Created by Muhammed Demirak on 3/9/22.
-//
-
-//
-
-//  Plan.swift
-
-//  PlansMap
-
-//
-
-//  Created by Muhammed Demirak on 3/9/22.
-
-//
-
 import UIKit
 import Foundation
 import CoreLocation

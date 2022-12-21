@@ -9,15 +9,10 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var usernameLogin: UITextField!
-    
     @IBOutlet weak var passwordLogin: UITextField!
-    
     @IBOutlet weak var emailLogin: UITextField!
-    
     @IBOutlet weak var phoneNumberLogin: UITextField!
-    
     @IBOutlet weak var loginButton: UIButton!
-    
     @IBOutlet weak var forgotPasswordButton: UIButton!
     
     private var loggedIn = false
@@ -65,12 +60,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
             passwordLogin.text = "";
         }
         else {
+            let hashedPassword = User.hashPassword(toHash: passLength)
+            UserDefaults.standard.set(true, forKey: "isLoggedIn")
             let db = DBManager();
             let url = URL(string: "http://abdasalaam.com/Functions/login.php")!
             let parameters: [String: Any] = [
                 "username": userLength,
-                "password": User.hashPassword(toHash: passLength)
+                "password": hashedPassword
             ]
+            UserDefaults.standard.setValue(userLength, forKey: "username")
+            UserDefaults.standard.setValue(passLength, forKey: "password")
             let message = db.postRequest(url, parameters)
             switch (message) {
             case "login successful":

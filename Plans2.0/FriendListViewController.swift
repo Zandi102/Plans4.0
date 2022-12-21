@@ -44,7 +44,6 @@ extension FriendListViewController : UITableViewDelegate {
         if messages.count > 0 {
             let userFields = messages[0]
             print("In User Class")
-            print(userFields)
             let jsonData = userFields.data(using: .utf8)!
             let resp: UserStruct = try! JSONDecoder().decode(UserStruct.self, from: jsonData)
             User.friendToShow.fullName = resp.name

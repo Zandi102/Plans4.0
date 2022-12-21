@@ -39,9 +39,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //adds the annotations to map
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-        Task {
-            refresher = MapRefresher()
-            addMapOverlay(planList: await refresher.refreshUserPlans())
+        if(refresher == nil) {
+            Task {
+                refresher = MapRefresher()
+                addMapOverlay(planList: await refresher.refreshUserPlans())
+            }
+        }
+        else {
+            Task {
+                addMapOverlay(planList: await refresher.refreshUserPlans())
+            }
         }
     }
     
